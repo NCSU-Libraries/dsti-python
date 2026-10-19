@@ -389,6 +389,34 @@ The full **Basics** and **Loops and Functions** workshops cover all of it. Links
 :::
 :::
 
+## Learn on your own
+
+LinkedIn Learning is **free with your NC State account**: sign in with *UnityID*@ncsu.edu and choose single sign-on.
+
+::: {.cards .two style="margin-top:22px"}
+::: {.card}
+[Learning Python]{.card-title}
+
+Joe Marini · beginner · 3h 41m (2025)
+
+Syntax, functions, files and data from the web, with coding challenges
+
+[[linkedin.com/learning/learning-python-25309312](https://www.linkedin.com/learning/learning-python-25309312)]{.muted .small}
+:::
+
+::: {.card}
+[Python Essential Training]{.card-title}
+
+Ryan Mitchell · beginner · 4h 23m (2023)
+
+Data types, control flow, functions, errors, files and modules, in Jupyter
+
+[[linkedin.com/learning/python-essential-training-18764650](https://www.linkedin.com/learning/python-essential-training-18764650)]{.muted .small}
+:::
+:::
+
+[How to sign in: [go.ncsu.edu/linkedinlearning](https://go.ncsu.edu/linkedinlearning)]{.muted}
+
 ## Next: exploratory data analysis with Polars
 
 ::: {.statement}
