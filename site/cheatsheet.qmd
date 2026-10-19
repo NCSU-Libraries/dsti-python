@@ -1,0 +1,137 @@
+---
+title: "Cheat sheet"
+subtitle: "Everything we used today, on one page. Print it or keep it open in a tab."
+toc: false
+---
+
+## Colab keys
+
+| Key | What it does |
+| --- | --- |
+| {{< kbd Shift-Enter >}} | Run the cell and move to the next one |
+| {{< kbd Cmd-Enter >}} (Mac), {{< kbd Ctrl-Enter >}} (Windows) | Run the cell and stay on it |
+| **+ Code** | Add a new code cell |
+| `len?` | Show help for `len`. Works for any name. |
+| **Runtime → Run before** | Run every cell above the current one, after a fresh start |
+
+Only the last line of a cell shows its value. Use `print()` to show more.
+
+## Variables and types
+
+| Code | What it does |
+| --- | --- |
+| `age = 34` | Store a value. One `=` assigns. |
+| `age == 34` | Compare two values. Two `==` ask a question and give `True` or `False`. |
+| `type(age)` | Show the data type: `int`, `float`, `str`, `bool`, `list`, `dict` |
+| `f"I am {age}"` | Put a value inside text (an f-string) |
+
+Names use letters, digits (0-9) and `_`, and can't start with a digit.
+
+## Strings and indexing
+
+Counting starts at 0.
+
+| Code | Result with `word = "python"` |
+| --- | --- |
+| `word[0]` | `'p'` |
+| `word[-1]` | `'n'` |
+| `word[0:3]` | `'pyt'` (the end index is left out) |
+| `len(word)` | `6` |
+
+## Lists
+
+| Code | What it does |
+| --- | --- |
+| `toys = ["feather", "string"]` | Make a list |
+| `toys[0]` | Get an item by position |
+| `toys[0] = "laser"` | Replace an item |
+| `toys[0:2]` | Slice: items 0 and 1 |
+| `toys.append("catnip")` | Add to the end. Changes the list itself. |
+
+## Dictionaries
+
+| Code | What it does |
+| --- | --- |
+| `birthdays = {"Spot": "May 1"}` | Make a dictionary of key: value pairs |
+| `birthdays["Spot"]` | Get a value by key |
+| `birthdays["Sparky"] = "May 10"` | Add or change a pair |
+
+`[]` on a list takes a position. `[]` on a dictionary takes a key.
+
+## Operators
+
+| Kind | Operators |
+| --- | --- |
+| Arithmetic | `+` `-` `*` `/` (always a float) `//` (floor division) `**` (power) `%` (remainder) |
+| Comparison | `==` `!=` `<` `>` `<=` `>=` |
+| Logical | `and` `or` `not` |
+
+## if, for and def
+
+::: {.panel-tabset}
+### if
+
+```python
+if score >= 90:
+    print("A")
+elif score >= 80:
+    print("B")
+else:
+    print("Keep going")
+```
+
+### for
+
+```python
+for i in range(5):
+    print(i)
+
+for name in ["Bob", "Bill"]:
+    print(name, len(name))
+```
+
+### def
+
+```python
+def add_nums(a, b):
+    return a + b
+
+total = add_nums(2, 3)
+```
+:::
+
+The colon and the indented lines belong to each other. `print` shows a value; `return` hands it back.
+
+## Methods
+
+Dot notation: `object.method(argument)`.
+
+| Kind | Example | What happens |
+| --- | --- | --- |
+| String method | `word.upper()` | Returns a **new** value. `word` is unchanged. |
+| List method | `toys.append("catnip")` | Changes the list itself. Run it twice and you get two. |
+
+## Common errors
+
+| Error | Usually means | Fix |
+| --- | --- | --- |
+| `NameError` | A name doesn't exist yet | Check the spelling, and run the cell that creates it |
+| `SyntaxError` | Python can't read the line | Look for a missing quote, bracket or colon |
+| `IndentationError` | The indented lines don't line up | Use the same number of spaces in the block |
+| `TypeError` | A value is the wrong type for the operation | Check with `type()`, such as `"5" + 5` |
+| `IndexError` | The position doesn't exist | Remember the last index is `len(x) - 1` |
+| `KeyError` | The key isn't in the dictionary | Check the spelling and capitalization |
+
+Read the last line of the message first: it names the error. The lines above it point to where it happened.
+
+## uv commands
+
+| Command | What it does |
+| --- | --- |
+| `uv --version` | Check uv is installed |
+| `uv init --python {{< var python >}} --vcs none dss-python` | Make a project folder |
+| `uv run --with jupyter jupyter lab` | Start JupyterLab, installing it on the first run |
+| `uv add matplotlib` | Add a package to the project |
+
+<p class="small-muted">Checked with uv {{< var checked.uv >}} on {{< var checked.date >}}. The
+<a href="https://docs.astral.sh/uv/">uv docs</a> are the latest word.</p>

@@ -1,0 +1,86 @@
+---
+pagetitle: "Accelerated Intro to Python"
+toc: false
+title-block-style: none
+---
+
+::: {.hero}
+<p class="small-muted" style="color:#BDBDBD;margin:0 0 .3rem">{{< var event.series >}} · NC State University Libraries</p>
+
+# Accelerated Intro to Python
+
+<p class="when">{{< var event.date >}}, {{< var event.time >}} · {{< var event.room >}}</p>
+
+Two hours, from installing Python to writing your own function. Everything after the install runs in Google Colab.
+:::
+
+## What you'll leave with
+
+::: {.finish-line}
+<ul id="finish-line">
+<li><label><input type="checkbox" data-k="uv"> uv and JupyterLab running on your laptop</label></li>
+<li><label><input type="checkbox" data-k="copy"> Your own copy of the notebook in Drive</label></li>
+<li><label><input type="checkbox" data-k="vars"> Variables and data types</label></li>
+<li><label><input type="checkbox" data-k="lists"> Lists and dictionaries</label></li>
+<li><label><input type="checkbox" data-k="if"> Comparisons and an <code>if</code></label></li>
+<li><label><input type="checkbox" data-k="for"> A <code>for</code> loop</label></li>
+<li><label><input type="checkbox" data-k="func"> A method call and a function of your own</label></li>
+</ul>
+:::
+
+<script>
+(() => {
+  const KEY = 'accelerated-intro-finish-line';
+  const boxes = document.querySelectorAll('#finish-line input[type=checkbox]');
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
+  boxes.forEach((box) => {
+    box.checked = !!saved[box.dataset.k];
+    box.addEventListener('change', () => {
+      saved[box.dataset.k] = box.checked;
+      try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+    });
+  });
+})();
+</script>
+
+## Before you come
+
+1. **Get a Google account.** An NC State or personal account both work. Colab needs one.
+2. **Bring a laptop** (Mac or Windows) and its charger.
+3. **Try the [setup guide](setup.qmd) ahead of time** if you like. It takes about 10 minutes, and we'll also do it
+   together at the start.
+
+## The materials
+
+::: {.cards}
+<a class="card-link" href="slides/index.html"><span class="card-title">Slides</span><span class="card-text">The live session, step by step</span></a>
+<a class="card-link" href="{{< var colab.learner >}}"><span class="card-title">Learner notebook</span><span class="card-text">Open in Colab and write the code with us</span></a>
+<a class="card-link" href="{{< var colab.filled >}}"><span class="card-title">Filled notebook</span><span class="card-text">Every answer, to check your work</span></a>
+<a class="card-link" href="setup.qmd"><span class="card-title">Setup guide</span><span class="card-text">Install uv and JupyterLab, and fix common problems</span></a>
+<a class="card-link" href="cheatsheet.qmd"><span class="card-title">Cheat sheet</span><span class="card-text">Keys, syntax and common errors on one page</span></a>
+:::
+
+## Today's plan
+
+| Time | What we'll do |
+| ---- | ------------------------------------------------------------ |
+| 8:30 | Check-in and refreshments, here in {{< var event.room >}} |
+| 9:00 | Welcome and what you'll learn |
+| 9:05 | Install Python with uv, and check JupyterLab |
+| 9:17 | Open the notebook in Colab and find your way around |
+| 9:31 | **Part 1:** variables, data types, lists, dictionaries and arithmetic |
+| 10:01 | Break |
+| 10:06 | **Part 2:** comparisons, `if`, `for`, methods and your own functions |
+| 10:51 | Wrap-up and next steps |
+| 11:00 | Practice and questions |
+| 11:30 | Wrap-up and discussion with all three tracks, in {{< var event.room >}} |
+
+## Get help
+
+- Questions about the workshop: [{{< var email >}}](mailto:{{< var email >}})
+- Help with access, accounts or setup, before or after: [go.ncsu.edu/getdatahelp]({{< var help >}})
+- The official [Python tutorial](https://docs.python.org/3/tutorial/) and [uv docs](https://docs.astral.sh/uv/)
+
+<p class="small-muted">Content is licensed CC BY 4.0, and code MIT. Built from the
+<a href="{{< var full.repo >}}">Getting Started with Python</a> workshops.</p>

@@ -1,0 +1,128 @@
+---
+title: "Set up Python"
+subtitle: "About 10 minutes. Do it before the session if you can; we'll also do it together at the start."
+---
+
+::: {.callout-note}
+## Stuck? Keep going in Colab
+
+The install is the first 12 minutes of the session. Everything after it runs in Google Colab, in your browser, so a
+stuck install won't hold you back: flag a helper and keep going. We'll finish it during the break.
+:::
+
+## 1. Open a terminal
+
+A terminal is a window where you type commands instead of clicking.
+
+::: {.panel-tabset}
+### Mac
+
+Press {{< kbd Cmd-Space >}}, type **Terminal**, and press {{< kbd Enter >}}.
+
+### Windows
+
+Press the {{< kbd Win >}} key, type **PowerShell**, and press {{< kbd Enter >}}. Your prompt starts with `PS C:\`.
+:::
+
+## 2. Install uv
+
+uv is one small tool that installs Python and the packages you need. It needs no admin rights. Copy the line for your
+computer, paste it into the terminal, and press {{< kbd Enter >}}.
+
+::: {.panel-tabset}
+### Mac
+
+::: {.prompt .prompt-shell}
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+:::
+
+### Windows (PowerShell)
+
+::: {.prompt .prompt-shell}
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+:::
+:::
+
+## 3. Check it worked
+
+**Close the terminal and open a new one**, so it can find uv. Then run:
+
+::: {.prompt .prompt-shell}
+```bash
+uv --version
+```
+:::
+
+You should see a version number, like `uv {{< var checked.uv >}}`.
+
+## 4. Make the workshop folder
+
+::: {.prompt .prompt-shell}
+```bash
+uv init --python {{< var python >}} --vcs none dss-python
+cd dss-python
+```
+:::
+
+- `--python {{< var python >}}` matches the Python that Colab uses, so code behaves the same in both places.
+- `--vcs none` skips git, so a Mac without Apple's developer tools doesn't ask to install them.
+
+## 5. Start JupyterLab
+
+::: {.prompt .prompt-shell}
+```bash
+uv run --with jupyter jupyter lab
+```
+:::
+
+The first run downloads Python {{< var python >}} and JupyterLab. On shared Wi-Fi this is the slowest step, so give it
+a few minutes. Then your browser opens JupyterLab.
+
+1. Choose **New → Notebook**.
+2. Type `1 + 1` in the first cell and press {{< kbd Shift-Enter >}}.
+3. You should see `2`.
+
+To stop JupyterLab, go back to the terminal and press {{< kbd Ctrl-C >}} twice.
+
+## If something goes wrong
+
+| What you see | What to do |
+| --- | --- |
+| `uv: command not found` | Open a new terminal. Still missing on a Mac? Run `source $HOME/.local/bin/env`. |
+| "running scripts is disabled" (Windows) | Use the exact command shown above, with `-ExecutionPolicy ByPass`. |
+| Antivirus or SmartScreen blocks the install | Flag a helper, or ask at [go.ncsu.edu/getdatahelp]({{< var help >}}). |
+| The browser didn't open | Copy the `http://localhost:…` link from the terminal and paste it into your browser. |
+| The download is slow | Keep going in Colab. You can finish the install during the break. |
+
+## 6. Open the notebook in Colab
+
+Most of the session happens here.
+
+1. Open the [learner notebook in Colab]({{< var colab.learner >}}).
+2. Sign in with your Google account.
+3. Click **Copy to Drive** in the toolbar.
+4. Work in the new tab, titled **Copy of accelerated-intro.ipynb**.
+
+A "not authored by Google" warning means you're in the original tab. Switch to your copy.
+
+## 7. Take your work home
+
+In Colab, choose **File → Download → Download .ipynb**. Save it in your `dss-python` folder. Then, in the terminal:
+
+::: {.prompt .prompt-shell}
+```bash
+cd dss-python
+uv run --with jupyter jupyter lab
+```
+:::
+
+Open the notebook from JupyterLab's file list. The bar plot needs matplotlib. Stop JupyterLab, run
+`uv add matplotlib`, and start it again.
+
+<p class="small-muted">Checked with uv {{< var checked.uv >}} on {{< var checked.date >}}. uv changes often; if a
+screen looks different, the <a href="https://docs.astral.sh/uv/getting-started/installation/">official install
+page</a> wins.</p>

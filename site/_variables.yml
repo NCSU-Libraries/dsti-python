@@ -1,0 +1,40 @@
+# One place for facts that appear on several pages and in the deck.
+# The event is DSTI Day 2's Python track, from the Day 2 schedule: check-in 8:30, all-track wrap-up 11:30.
+
+event:
+  title: "Accelerated Intro to Python"
+  series: "Data Science Training Intensive"
+  date: "Tuesday, October 20, 2026"
+  time: "9:00–11:30 am"
+  room: "East Learning Lab A"
+  page: ""
+
+site: "https://ncsu-libraries.github.io/dsti-python/"
+site-short: "ncsu-libraries.github.io/dsti-python"
+go: "go.ncsu.edu/dsti-python"   # short link to the site, on the slides and the QR code
+repo: "https://github.com/NCSU-Libraries/dsti-python"
+help: "https://go.ncsu.edu/getdatahelp"
+email: "lib-datascienceservices@ncsu.edu"
+eval: "https://go.ncsu.edu/dss-workshop-eval"
+
+# The session notebooks (built by tools/build_notebooks.py)
+colab:
+  learner: "https://colab.research.google.com/github/NCSU-Libraries/dsti-python/blob/main/notebooks/accelerated-intro.ipynb"
+  filled: "https://colab.research.google.com/github/NCSU-Libraries/dsti-python/blob/main/notebooks/accelerated-intro-solutions.ipynb"
+
+# The full workshops this session was built from
+full:
+  basics: "https://colab.research.google.com/github/NCSU-Libraries/getting-started-with-python/blob/main/workshops/basics/basics.ipynb"
+  basics-filled: "https://colab.research.google.com/github/NCSU-Libraries/getting-started-with-python/blob/main/workshops/basics/basics-solutions.ipynb"
+  loops: "https://colab.research.google.com/github/NCSU-Libraries/getting-started-with-python/blob/main/workshops/loops-and-functions/loops-and-functions.ipynb"
+  loops-filled: "https://colab.research.google.com/github/NCSU-Libraries/getting-started-with-python/blob/main/workshops/loops-and-functions/loops-and-functions-solutions.ipynb"
+  eda: "https://colab.research.google.com/github/NCSU-Libraries/getting-started-with-python/blob/main/workshops/exploratory-data-analysis/exploratory-data-analysis.ipynb"
+  repo: "https://github.com/NCSU-Libraries/getting-started-with-python"
+
+# Colab's Python version; keep `uv init --python` in step with it
+python: "3.13"
+
+# The uv version every command on the Setup page was checked against
+checked:
+  uv: "0.13.1"
+  date: "October 19, 2026"

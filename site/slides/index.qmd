@@ -1,0 +1,408 @@
+---
+title: "Accelerated Intro to Python"
+subtitle: "Data Science Training Intensive · NC State University Libraries"
+from: markdown-smart
+format:
+  revealjs:
+    theme: [default, ../theme/ncsu.scss, ../theme/slides.scss]
+    width: 1280
+    height: 760
+    margin: 0.06
+    slide-number: true
+    hash-type: number
+    transition: fade
+    background-transition: fade
+    preview-links: false
+    footer: "Data Science Services · go.ncsu.edu/dsti-python"
+    logo: ../images/lib_logo_whiteBG.png
+---
+
+## While we get started
+
+::: {.two-col}
+::: {}
+[Open the materials]{.eyebrow}
+
+[{{< var go >}}]{.statement}
+
+::: {.cards .two style="margin-top:28px"}
+::: {.card}
+[Want to install Python today?]{.card-title}
+Start now: **Setup** on the materials page.
+:::
+
+::: {.card .red}
+[No laptop install?]{.card-title}
+That's fine. Everything after the install runs in Google Colab, in your browser.
+:::
+:::
+:::
+
+::: {style="text-align:center;padding-top:30px"}
+![](../images/qr-session.svg){.qr .qr-big fig-alt="QR code for the workshop materials page, go.ncsu.edu/dsti-python"}
+:::
+:::
+
+## Data Science Services {.dss background-image="../images/dss/dss-services.png" background-size="contain" background-color="#FFFFFF" data-state="dss-slide"}
+
+[Our services: consulting, workshops and instruction, specialized spaces. What we do: finding data, wrangling data, analyzing data, visualization, geographic information systems (GIS), software access.]{.visually-hidden}
+
+## Who we are {.dss .dss-team .nostretch data-state="dss-slide"}
+
+![](../images/dss/dss-team.png){fig-alt="Data Science Services, who we are: Mara Blake, Head, Data Science Services; Shannon Ricci, Associate Head, Data Science Services; Jeff Essic, Lead Librarian for GIS; Alp Tezbasaran, Data Science Librarian; Selene Schmittling, Data Science Librarian; Bin Liu, Data Science Librarian; Ashley Pearson, University Library Specialist"}
+
+Our team comes from a variety of academic backgrounds, including nuclear engineering, electrical engineering, industrial and environmental engineering, marine ecology, information science, natural resources, business administration, and geographic information sciences.
+
+## How to contact us {.dss background-image="../images/dss/dss-contact.png" background-size="contain" background-color="#FFFFFF" data-state="dss-slide"}
+
+[How to contact us: go.ncsu.edu/getdatahelp. Email us, book a 30-minute appointment with a Data Science Consultant, or reserve a workstation in the DXL or Dataspace. All communication with the program is through getdatahelp@ncsu.edu.]{.visually-hidden}
+
+## Today's finish line
+
+<ul class="finish" style="font-size:0.58em;line-height:1.35">
+<li>Install Python with uv</li>
+<li>Understand the differences between Python and Jupyter/Google Colab</li>
+<li>Navigate the Google Colab environment</li>
+<li>Create variables</li>
+<li>Use basic data types and data structures, such as lists and dictionaries</li>
+<li>Use arithmetic, comparison, and logical operators</li>
+<li>Write an <code>if</code> statement and a <code>for</code> loop</li>
+<li>Use methods with dot notation</li>
+<li>Write a user-defined function</li>
+</ul>
+
+# Install Python with uv {.divider background-color="#CC0000"}
+
+[12 minutes, together]{.eyebrow}
+
+## The pieces
+
+::: {.cards .two}
+::: {.card}
+[Python]{.card-title}
+The language itself.
+:::
+
+::: {.card}
+[uv]{.card-title}
+The small tool that installs Python and packages for you.
+:::
+
+::: {.card}
+[JupyterLab]{.card-title}
+The notebook app on your laptop.
+:::
+
+::: {.card .red}
+[Colab]{.card-title}
+The same notebook idea, on Google's computers. We use it for the rest of class.
+:::
+:::
+
+## Install uv
+
+::: {.cards .two}
+::: {.card}
+[Mac]{.card-title}
+
+Open **Terminal**: <kbd>⌘</kbd> <kbd>Space</kbd>, type "Terminal"
+
+<div class="type shell">curl -LsSf https://astral.sh/uv/install.sh | sh</div>
+:::
+
+::: {.card}
+[Windows]{.card-title}
+
+Open **PowerShell**: Start, type "PowerShell"
+
+<div class="type shell" style="font-size:0.55em">powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"</div>
+:::
+:::
+
+**Close and reopen the terminal**, then check:
+
+<div class="type shell" style="margin-top:20px">uv &#45;&#45;version</div>
+
+## A folder, and JupyterLab
+
+::: {.two-col .even}
+::: {}
+<div class="type shell">uv init &#45;&#45;python 3.13 &#45;&#45;vcs none dss-python<br>cd dss-python<br>uv run &#45;&#45;with jupyter jupyter lab</div>
+
+The first run downloads Python and JupyterLab: the slow step.
+:::
+
+::: {.small}
+- When the browser opens, make a new notebook and run `1 + 1`
+- Leave it running
+- <kbd>Ctrl</kbd>+<kbd>C</kbd> in the terminal stops it at the end of class
+:::
+:::
+
+## If you see...
+
+| If you see | Do |
+|---|---|
+| `uv: command not found` | Open a **new** terminal, or run `source $HOME/.local/bin/env` |
+| Mac offers "command line developer tools" | **Not Now** is fine |
+| Windows SmartScreen or antivirus warning | Flag a helper |
+| Still stuck | Flag a helper: we finish during the break |
+
+::: {.statement style="margin-top:34px"}
+At 0:17 we all move to *Colab*.
+:::
+
+# Google Colab {.divider background-color="#CC0000"}
+
+[Everything from here runs in your browser]{.eyebrow}
+
+## Open the notebook
+
+1. Open **{{< var go >}}** and choose the **learner notebook**
+2. Sign in with Google, then click **Copy to Drive**
+3. Work in the new tab titled **"Copy of accelerated-intro.ipynb"**
+
+::: {.card .red style="margin-top:22px"}
+Edits in the original tab aren't saved. Every tab title should start with **"Copy of"**.
+:::
+
+[Notebook: *Accelerated Intro to Python*, top cell]{.pill}
+
+## Python vs. Jupyter vs. Colab
+
+::: {.cards .three}
+::: {.card}
+[Python]{.card-title}
+The language. It ran on your laptop and runs here too.
+:::
+
+::: {.card}
+[Jupyter]{.card-title}
+A notebook: code and text in cells, results right underneath.
+:::
+
+::: {.card .red}
+[Colab]{.card-title}
+Jupyter notebooks on Google's computers. Nothing to install.
+:::
+:::
+
+[Section 1: Python and Colab]{.pill}
+
+## Find your way around
+
+::: {.two-col .even}
+::: {.small}
+- **Table of contents** on the left: how we navigate
+- **Variables** panel: `{x}`
+- <kbd>Shift</kbd>+<kbd>Enter</kbd> runs a cell and moves on
+- <kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>Enter</kbd> runs it in place
+- Only the **last line** of a cell shows automatically
+:::
+
+::: {}
+<div class="type">len?</div>
+
+Put `?` after a name for help.
+:::
+:::
+
+[Section 2: Notebook basics]{.pill}
+
+# Part 1: Basics {.divider background-color="#CC0000"}
+
+[Notebook sections 1 to 5]{.eyebrow}
+
+## Variables
+
+A variable is a name for a value. `=` **assigns**; `==` **compares**.
+
+<div class="type">number = 7<br>number_times = number * number<br>print(f"{number} x {number} = {number_times}")</div>
+
+[Try it: `number_plus`]{.pill}
+[Section 3: Variables and data types]{.pill .dark}
+
+## Data types, and counting from 0
+
+::: {.two-col .even}
+::: {}
+<div class="type">type(7)      # int<br>type(7.5)    # float<br>"Hello"[0]   # H<br>"Hello"[0:3] # Hel</div>
+:::
+
+::: {.small}
+- Numbers, text, and `True`/`False`
+- Python counts from **0**
+- A slice stops *before* the end index
+:::
+:::
+
+[Section 3: Variables and data types]{.pill .dark}
+
+## Lists and dictionaries
+
+::: {.two-col .even}
+::: {}
+[List: a position]{.label}
+<div class="type">cat_toys[1]</div>
+
+[Dictionary: a key]{.label}
+<div class="type">birthdays["Spot"]</div>
+:::
+
+::: {.small}
+- Square brackets hold a **position** in a list, a **key** in a dictionary
+- Lists change in place: `cat_toys[0] = "feather"`
+- Add a key: `cats["Carla"] = ...`
+:::
+:::
+
+[Try it: `my_info`, and Spot's birthday]{.pill}
+
+## Arithmetic
+
+<div class="type">7 / 2     # 3.5<br>7 // 2    # 3<br>2 ** 3    # 8<br>7 % 2     # 1</div>
+
+`/` always gives a float. `//` rounds down. Watch the type of each result.
+
+[Try it: `(400 * 4) / 14 + 39`]{.pill}
+[Section 5: Arithmetic]{.pill .dark}
+
+## Break
+
+::: {.statement}
+Five minutes. Part 2 is in *this same notebook*.
+:::
+
+Everything you made is still here. Helpers: finishing flagged installs.
+
+# Part 2: Control flow and functions {.divider background-color="#CC0000"}
+
+[Notebook sections 6 to 10]{.eyebrow}
+
+## Comparison and logical operators
+
+::: {.two-col .even}
+::: {}
+<div class="type">5 > 2<br>cat_name == "Sally"<br>x > 0 and x < 10</div>
+:::
+
+::: {.small}
+- Each comparison gives `True` or `False`
+- **Guess first**, then run
+- Logic is plain English words
+:::
+:::
+
+[Try it: less than 10 and greater than zero]{.pill}
+[Section 6]{.pill .dark}
+
+## if, elif and else
+
+::: {.two-col .even}
+::: {}
+<div class="type">if cat_name == "Sally":<br>&nbsp;&nbsp;&nbsp;&nbsp;print("hi")<br>elif cat_name in my_cats:<br>&nbsp;&nbsp;&nbsp;&nbsp;...</div>
+:::
+
+::: {.small}
+- The **colon** starts a block
+- The **indent** is the block
+- Skip the indent and you get an `IndentationError`
+:::
+:::
+
+[Section 7: if, elif and else]{.pill .dark}
+
+## for loops
+
+<div class="type">for fruit in fruits:<br>&nbsp;&nbsp;&nbsp;&nbsp;print(f"I like {fruit}")</div>
+
+`range(5)` counts 0, 1, 2, 3, 4. Same indentation rule as `if`.
+
+[Try it: the fruits loop]{.pill}
+[Section 8: for loops]{.pill .dark}
+
+## Methods and dot notation
+
+::: {.two-col .even}
+::: {}
+<div class="type">word.upper()<br>cat_toys.append("catnip")</div>
+:::
+
+::: {.small}
+- Form: `object.method(argument)`
+- A string method **returns a new value**
+- `.append` **changes the list**
+- Polars, next workshop, is chains of these
+:::
+:::
+
+[Section 9: Methods and dot notation]{.pill .dark}
+
+## Your own functions
+
+<div class="type">def return_hello():<br>&nbsp;&nbsp;&nbsp;&nbsp;return "hello"</div>
+
+`print` shows a value. `return` **hands it back** so you can use it again.
+
+[Try it: `add_nums`]{.pill}
+[Section 10: Your own functions]{.pill .dark}
+
+# Keep going {.divider background-color="#CC0000"}
+
+[What to do after today]{.eyebrow}
+
+## What we skipped
+
+::: {.cards .two}
+::: {.card}
+[On purpose]{.card-title}
+
+- Dates and times
+- Type conversion
+- `while` loops
+- Reading and writing files
+- Most methods
+:::
+
+::: {.card .red}
+[Where it lives]{.card-title}
+The full **Basics** and **Loops and Functions** workshops cover all of it. Links are in the notebook's **Keep going** section.
+:::
+:::
+
+## Keep practicing
+
+::: {.two-col style="grid-template-columns:1.4fr 0.6fr"}
+::: {style="font-size:0.8em"}
+- **Practice at home** in the notebook: each cell stands on its own
+- **The filled notebook** has every answer
+- **The cheat sheet** on the materials page
+- **Take your work home:** File, Download .ipynb, then `uv run --with jupyter jupyter lab`
+- **Help:** [go.ncsu.edu/getdatahelp](https://go.ncsu.edu/getdatahelp)
+- **Questions:** [{{< var email >}}](mailto:{{< var email >}})
+:::
+
+::: {style="text-align:center"}
+![](../images/qr-session.svg){.qr fig-alt="QR code for the workshop materials page, go.ncsu.edu/dsti-python"}
+
+[{{< var go >}}]{.muted}
+:::
+:::
+
+## Next: exploratory data analysis with Polars
+
+::: {.statement}
+Today's lists, dictionaries, methods and functions are *what Polars is built from*.
+:::
+
+Next in the series: tables of data, loaded and explored in Python.
+
+## Thank you {.thank-you-slide}
+
+## Tell us how we did
+
+::: {style="text-align:center"}
+[go.ncsu.edu/dss-workshop-eval](https://go.ncsu.edu/dss-workshop-eval){style="font-size:1.5em;font-weight:800"}
+
+![](../images/dss/qr-eval.png){.qr .qr-big fig-alt="QR code for the workshop evaluation, go.ncsu.edu/dss-workshop-eval"}
+:::
