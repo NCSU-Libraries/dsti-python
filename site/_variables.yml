@@ -16,6 +16,7 @@ repo: "https://github.com/NCSU-Libraries/dsti-python"
 help: "https://go.ncsu.edu/getdatahelp"
 email: "lib-datascienceservices@ncsu.edu"
 eval: "https://go.ncsu.edu/dss-workshop-eval"
+workshops: "https://go.ncsu.edu/datavizworkshops"   # every DSS workshop, with dates; QR in images/qr-workshops.svg
 
 # The session notebooks (built by tools/build_notebooks.py)
 colab:

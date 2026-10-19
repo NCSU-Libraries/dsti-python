@@ -76,6 +76,16 @@ Two hours, from installing Python to writing your own function. Everything after
 | 11:00 | Practice and questions |
 | 11:30 | Wrap-up and discussion with all three tracks, in {{< var event.room >}} |
 
+## More AI workshops from us
+
+- Colab and Chill: A Vibe Coding Approach to Exploratory Data Analysis using AI
+- Agentic Coding with Claude
+- Working with Local LLMs
+- Build Your First Public Portfolio with GitHub: AI, Version Control, and IDE Basics
+
+Dates and sign-up for these and every other Data Science Services workshop:
+[go.ncsu.edu/datavizworkshops]({{< var workshops >}})
+
 ## Get help
 
 - Questions about the workshop: [{{< var email >}}](mailto:{{< var email >}})

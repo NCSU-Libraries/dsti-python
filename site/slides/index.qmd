@@ -397,6 +397,23 @@ Today's lists, dictionaries, methods and functions are *what Polars is built fro
 
 Next in the series: tables of data, loaded and explored in Python.
 
+## More AI workshops from us
+
+::: {.two-col style="grid-template-columns:1.4fr 0.6fr"}
+::: {style="font-size:0.85em"}
+- Colab and Chill: A Vibe Coding Approach to Exploratory Data Analysis using AI
+- Agentic Coding with Claude
+- Working with Local LLMs
+- Build Your First Public Portfolio with GitHub: AI, Version Control, and IDE Basics
+:::
+
+::: {style="text-align:center"}
+![](../images/qr-workshops.svg){.qr fig-alt="QR code for the Data Science Services workshop list, go.ncsu.edu/datavizworkshops"}
+
+[go.ncsu.edu/datavizworkshops]{.muted}
+:::
+:::
+
 ## Thank you {.thank-you-slide}
 
 ## Tell us how we did

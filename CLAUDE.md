@@ -57,6 +57,8 @@ pushes.
   rename all.
 - **The go link is on the slides, the QR code and the pages.** If it changes, update `go` in `site/_variables.yml`,
   the deck's `footer:` in `site/slides/index.qmd` (YAML can't use `var`), and regenerate `site/images/qr-session.svg`.
+- **The AI workshop list is in two places**: the home page's "More AI workshops from us" and the deck slide of the
+  same name. Titles drop the "Data Science Special Topics:" prefix. Change both together.
 - **The deck sets `from: markdown-smart`** so quotes in commands stay straight; keep it, or `"irm …"` turns curly.
 - **Python version:** `uv init --python` on the Setup page must match Colab's Python (`python` in
   `site/_variables.yml`). Check with `!python --version` in Colab before each run of the session.
