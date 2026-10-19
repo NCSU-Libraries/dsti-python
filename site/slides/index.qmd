@@ -1,5 +1,5 @@
 ---
-title: "Accelerated Intro to Python"
+title: "Introduction to Programming with Python"
 subtitle: "Data Science Training Intensive · NC State University Libraries"
 from: markdown-smart
 format:
@@ -160,13 +160,13 @@ At 0:17 we all move to *Colab*.
 
 1. Open **{{< var go >}}** and choose the **learner notebook**
 2. Sign in with Google, then click **Copy to Drive**
-3. Work in the new tab titled **"Copy of accelerated-intro.ipynb"**
+3. Work in the new tab titled **"Copy of introduction-to-programming-with-python.ipynb"**
 
 ::: {.card .red style="margin-top:22px"}
 Edits in the original tab aren't saved. Every tab title should start with **"Copy of"**.
 :::
 
-[Notebook: *Accelerated Intro to Python*, top cell]{.pill}
+[Notebook: *Introduction to Programming with Python*, top cell]{.pill}
 
 ## Python vs. Jupyter vs. Colab
 

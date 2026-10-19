@@ -2,7 +2,7 @@
 # The event is DSTI Day 2's Python track, from the Day 2 schedule: check-in 8:30, all-track wrap-up 11:30.
 
 event:
-  title: "Accelerated Intro to Python"
+  title: "Introduction to Programming with Python"
   series: "Data Science Training Intensive"
   date: "Tuesday, October 20, 2026"
   time: "9:00–11:30 am"
@@ -19,8 +19,8 @@ eval: "https://go.ncsu.edu/dss-workshop-eval"
 
 # The session notebooks (built by tools/build_notebooks.py)
 colab:
-  learner: "https://colab.research.google.com/github/NCSU-Libraries/dsti-python/blob/main/notebooks/accelerated-intro.ipynb"
-  filled: "https://colab.research.google.com/github/NCSU-Libraries/dsti-python/blob/main/notebooks/accelerated-intro-solutions.ipynb"
+  learner: "https://colab.research.google.com/github/NCSU-Libraries/dsti-python/blob/main/notebooks/introduction-to-programming-with-python.ipynb"
+  filled: "https://colab.research.google.com/github/NCSU-Libraries/dsti-python/blob/main/notebooks/introduction-to-programming-with-python-solutions.ipynb"
 
 # The full workshops this session was built from
 full:

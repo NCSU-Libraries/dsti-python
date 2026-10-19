@@ -1,5 +1,5 @@
 ---
-pagetitle: "Accelerated Intro to Python"
+pagetitle: "Introduction to Programming with Python"
 toc: false
 title-block-style: none
 ---
@@ -7,7 +7,7 @@ title-block-style: none
 ::: {.hero}
 <p class="small-muted" style="color:#BDBDBD;margin:0 0 .3rem">{{< var event.series >}} · NC State University Libraries</p>
 
-# Accelerated Intro to Python
+# Introduction to Programming with Python
 
 <p class="when">{{< var event.date >}}, {{< var event.time >}} · {{< var event.room >}}</p>
 
@@ -30,7 +30,7 @@ Two hours, from installing Python to writing your own function. Everything after
 
 <script>
 (() => {
-  const KEY = 'accelerated-intro-finish-line';
+  const KEY = 'dsti-python-finish-line';
   const boxes = document.querySelectorAll('#finish-line input[type=checkbox]');
   let saved = {};
   try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}

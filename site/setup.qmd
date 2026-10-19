@@ -105,7 +105,7 @@ Most of the session happens here.
 1. Open the [learner notebook in Colab]({{< var colab.learner >}}).
 2. Sign in with your Google account.
 3. Click **Copy to Drive** in the toolbar.
-4. Work in the new tab, titled **Copy of accelerated-intro.ipynb**.
+4. Work in the new tab, titled **Copy of introduction-to-programming-with-python.ipynb**.
 
 A "not authored by Google" warning means you're in the original tab. Switch to your copy.
 

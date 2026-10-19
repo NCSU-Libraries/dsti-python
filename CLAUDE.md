@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-Materials for **Accelerated Intro to Python**, a 2-hour NC State University Libraries Data Science Services session
+Materials for **Introduction to Programming with Python**, a 2-hour NC State University Libraries Data Science Services session
 taught by Alp Tezbasaran at the Data Science Training Intensive (DSTI).
 
 - **When and where:** Tuesday 2026-10-20, DSTI Day 2's Python track, East Learning Lab A. Check-in is at 8:30, the
@@ -23,8 +23,8 @@ Basics and Loops and Functions notebooks. The deck summarizes each segment; it n
 
 | Path | Contents |
 | --- | --- |
-| `notebooks/accelerated-intro.ipynb` | Learner notebook: blank code under comment scaffolds |
-| `notebooks/accelerated-intro-solutions.ipynb` | Filled notebook: every exercise answered |
+| `notebooks/introduction-to-programming-with-python.ipynb` | Learner notebook: blank code under comment scaffolds |
+| `notebooks/introduction-to-programming-with-python-solutions.ipynb` | Filled notebook: every exercise answered |
 | `tools/build_notebooks.py` | Generates both notebooks from getting-started-with-python at pinned commit `9b288fa` |
 | `site/` | Quarto website plus the reveal.js deck (`site/slides/index.qmd`) |
 | `site/_variables.yml` | Facts used on several pages and in the deck: event, links, Python and uv versions |
@@ -40,7 +40,7 @@ $Q render site                                                         # full bu
 $Q render site/slides/index.qmd                                        # the deck only
 python3 tools/check_links.py                                           # after a render
 # Run the filled notebook top to bottom on Colab's Python; only cells tagged raises-exception may raise
-uv run --python 3.13 --with jupyter --with matplotlib jupyter nbconvert --to notebook --execute --stdout notebooks/accelerated-intro-solutions.ipynb > /dev/null
+uv run --python 3.13 --with jupyter --with matplotlib jupyter nbconvert --to notebook --execute --stdout notebooks/introduction-to-programming-with-python-solutions.ipynb > /dev/null
 ```
 
 The Pages workflow (`.github/workflows/deploy-pages.yml`) runs `quarto render site` with Quarto 1.10.18. Only Alp
@@ -64,7 +64,7 @@ pushes.
 ## Gotchas
 
 - **The Colab links only work once the repo is public on GitHub** and the notebooks are pushed.
-- **The home page checklist stores its state under the localStorage key `accelerated-intro-finish-line`.** Every
+- **The home page checklist stores its state under the localStorage key `dsti-python-finish-line`.** Every
   ncsu-libraries.github.io site shares one origin, so a generic key would collide with other workshop sites.
 - **Quarto slides:**
   - Quarto gives level-1 (`#`) section slides the class `title-slide`, and `ncsu.scss` paints that white. The

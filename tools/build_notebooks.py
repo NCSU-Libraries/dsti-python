@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Build the learner and filled notebooks for the Accelerated Intro to Python session.
+"""Build the learner and filled notebooks for the Introduction to Programming with Python session.
 
     python3 tools/build_notebooks.py [--src PATH]
 
-Writes notebooks/accelerated-intro.ipynb (learner) and
-notebooks/accelerated-intro-solutions.ipynb (filled) from one ordered manifest.
+Writes notebooks/introduction-to-programming-with-python.ipynb (learner) and
+notebooks/introduction-to-programming-with-python-solutions.ipynb (filled) from one ordered manifest.
 
 Source cells are read from the getting-started-with-python repo at a pinned commit
 (`git show <commit>:<path>`), so later edits in that repo's working tree never leak in.
@@ -23,8 +23,8 @@ from pathlib import Path
 COMMIT = "9b288fa"
 DEFAULT_SRC = "~/Desktop/getting-started-with-python"
 ROOT = Path(__file__).resolve().parent.parent
-OUT_LEARNER = ROOT / "notebooks" / "accelerated-intro.ipynb"
-OUT_FILLED = ROOT / "notebooks" / "accelerated-intro-solutions.ipynb"
+OUT_LEARNER = ROOT / "notebooks" / "introduction-to-programming-with-python.ipynb"
+OUT_FILLED = ROOT / "notebooks" / "introduction-to-programming-with-python-solutions.ipynb"
 
 SOURCES = {
     "B": (
@@ -39,8 +39,8 @@ SOURCES = {
 
 # URLs (kept in step with site/_variables.yml; checked against it below when present)
 COLAB = "https://colab.research.google.com/github/"
-URL_LEARNER = COLAB + "NCSU-Libraries/dsti-python/blob/main/notebooks/accelerated-intro.ipynb"
-URL_FILLED = COLAB + "NCSU-Libraries/dsti-python/blob/main/notebooks/accelerated-intro-solutions.ipynb"
+URL_LEARNER = COLAB + "NCSU-Libraries/dsti-python/blob/main/notebooks/introduction-to-programming-with-python.ipynb"
+URL_FILLED = COLAB + "NCSU-Libraries/dsti-python/blob/main/notebooks/introduction-to-programming-with-python-solutions.ipynb"
 URL_BASICS = COLAB + "NCSU-Libraries/getting-started-with-python/blob/main/workshops/basics/basics.ipynb"
 URL_BASICS_F = COLAB + "NCSU-Libraries/getting-started-with-python/blob/main/workshops/basics/basics-solutions.ipynb"
 URL_LOOPS = COLAB + "NCSU-Libraries/getting-started-with-python/blob/main/workshops/loops-and-functions/loops-and-functions.ipynb"
@@ -243,7 +243,7 @@ OUTCOMES = """1. Install Python with uv
 CREDIT = ("Built from the Getting Started with Python workshops (Basics; Loops and Functions) "
           "by Alp Tezbasaran, with credit to Selene R. Schmittling.")
 
-TITLE_LEARNER = f"""# Accelerated Intro to Python
+TITLE_LEARNER = f"""# Introduction to Programming with Python
 
 Data Science Training Intensive · NC State University Libraries, Data Science Services
 
@@ -259,7 +259,7 @@ This is the learner notebook: write the code under each comment, with the instru
 
 Colab's AI features stay off today. Workshop site: [{URL_SITE}]({URL_SITE})"""
 
-TITLE_FILLED = f"""# Accelerated Intro to Python: Filled
+TITLE_FILLED = f"""# Introduction to Programming with Python: Filled
 
 Data Science Training Intensive · NC State University Libraries, Data Science Services
 
@@ -516,7 +516,7 @@ MANIFEST = [
     Copy("L", 85, "Arguments passed to a function can be variables"),
     Copy("L", 86, "# Define variables to pass into personalized hello message function",
          edits=[R("session = \"Getting Started with Python - Loops and Functions\"",
-                  "session = \"Accelerated Intro to Python\"")]),
+                  "session = \"Introduction to Programming with Python\"")]),
     Copy("L", 89, "**Try it yourself:** Create a function named `add_nums` that takes two numbers as arguments and returns the results of adding these two numbers"),
     Copy("L", 90, "# Define a function that returns the results of adding two numbers passed as"),
 

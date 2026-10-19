@@ -5,7 +5,7 @@ project:
     - images/
 
 website:
-  title: "Accelerated Intro to Python"
+  title: "Introduction to Programming with Python"
   description: "Two hours from installing Python to writing your own function, from NC State University Libraries' Data Science Services."
   site-url: "https://ncsu-libraries.github.io/dsti-python/"
   repo-url: "https://github.com/NCSU-Libraries/dsti-python"
@@ -26,9 +26,9 @@ website:
         text: Setup
       - text: Notebooks
         menu:
-          - href: "https://colab.research.google.com/github/NCSU-Libraries/dsti-python/blob/main/notebooks/accelerated-intro.ipynb"
+          - href: "https://colab.research.google.com/github/NCSU-Libraries/dsti-python/blob/main/notebooks/introduction-to-programming-with-python.ipynb"
             text: "Learner notebook (Colab)"
-          - href: "https://colab.research.google.com/github/NCSU-Libraries/dsti-python/blob/main/notebooks/accelerated-intro-solutions.ipynb"
+          - href: "https://colab.research.google.com/github/NCSU-Libraries/dsti-python/blob/main/notebooks/introduction-to-programming-with-python-solutions.ipynb"
             text: "Filled notebook (Colab)"
       - href: cheatsheet.qmd
         text: Cheat sheet

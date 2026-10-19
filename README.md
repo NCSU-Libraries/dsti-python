@@ -2,7 +2,7 @@
 
 <a href="https://www.lib.ncsu.edu/" aria-label="NC State University Libraries"><img src="site/images/lib_logo_whiteBG.svg" width="400" alt="NC State University Libraries logo" /></a>
 
-<h2>Accelerated Intro to Python</h2>
+<h2>Introduction to Programming with Python</h2>
 
 <a href="https://www.lib.ncsu.edu/workshops"><img alt="NC State Libraries Workshops" src="https://img.shields.io/badge/NC%20State%20Libraries-Workshops-red"></a>
 <a href="https://www.lib.ncsu.edu/staff/department/data-science-services"><img alt="Data Science Services" src="https://img.shields.io/badge/Data%20Science%20Services-Libraries-red"></a>
@@ -21,8 +21,8 @@ function of their own.
 
 | Notebook | Open it |
 | --- | --- |
-| **Learner**: blank code cells you fill in with the instructor | <a href="https://colab.research.google.com/github/NCSU-Libraries/dsti-python/blob/main/notebooks/accelerated-intro.ipynb"><img alt="Open the learner notebook in Colab" src="https://colab.research.google.com/assets/colab-badge.svg"></a> |
-| **Filled**: every exercise answered, to check your work | <a href="https://colab.research.google.com/github/NCSU-Libraries/dsti-python/blob/main/notebooks/accelerated-intro-solutions.ipynb"><img alt="Open the filled notebook in Colab" src="https://colab.research.google.com/assets/colab-badge.svg"></a> |
+| **Learner**: blank code cells you fill in with the instructor | <a href="https://colab.research.google.com/github/NCSU-Libraries/dsti-python/blob/main/notebooks/introduction-to-programming-with-python.ipynb"><img alt="Open the learner notebook in Colab" src="https://colab.research.google.com/assets/colab-badge.svg"></a> |
+| **Filled**: every exercise answered, to check your work | <a href="https://colab.research.google.com/github/NCSU-Libraries/dsti-python/blob/main/notebooks/introduction-to-programming-with-python-solutions.ipynb"><img alt="Open the filled notebook in Colab" src="https://colab.research.google.com/assets/colab-badge.svg"></a> |
 
 In Colab, click **Copy to Drive** so your changes are saved to your own Google Drive.
 
