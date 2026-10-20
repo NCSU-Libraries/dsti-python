@@ -457,7 +457,7 @@ The full **Basics** and **Loops and Functions** workshops cover all of it. Links
 :::
 :::
 
-## Try it on real data
+## Two data activities
 
 ::: {.cards .two}
 ::: {.card}
@@ -466,6 +466,14 @@ The full **Basics** and **Loops and Functions** workshops cover all of it. Links
 - The same file the spreadsheets track cleans
 - Plain Python first, then Polars
 - About 45 minutes
+:::
+
+::: {.card}
+[Campus café sales]{.card-title}
+
+- Made-up data from a café register
+- Fix a bad price, then check the weather
+- About 35 minutes
 :::
 :::
 

@@ -85,3 +85,6 @@ Tezbasaran, with credit to Selene R. Schmittling.
 
 The time-use activity's data (`data/atus_*.csv`) is an extract of the American Time Use Survey (U.S. Bureau of Labor
 Statistics), via ICPSR study 36268, sampled and prepared by the Data Science Training Intensive team.
+
+The café activity's data (`data/cafe_sales.csv`) is synthetic, from the Libraries' Agentic Coding with Claude workshop
+(CC BY 4.0).

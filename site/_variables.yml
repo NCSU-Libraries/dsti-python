@@ -44,6 +44,16 @@ activities:
       working: "data/atus_working.csv"
       raw: "data/atus_raw.csv"
     polars: "2.0.0"   # the Polars version the check numbers were verified with
+  cafe:
+    colab:
+      learner: "https://colab.research.google.com/github/NCSU-Libraries/dsti-python/blob/main/notebooks/activity-cafe.ipynb"
+      filled: "https://colab.research.google.com/github/NCSU-Libraries/dsti-python/blob/main/notebooks/activity-cafe-solutions.ipynb"
+    download:
+      learner: "notebooks/activity-cafe.ipynb"
+      filled: "notebooks/activity-cafe-solutions.ipynb"
+    data:
+      sales: "data/cafe_sales.csv"
+    polars: "2.0.0"   # the Polars version the check numbers were verified with
 
 # The conda alternative to uv: conda-forge only, so the Anaconda defaults channel (and its Terms of Service prompt)
 # is never touched. Keep python= in step with `python` below. Quarto reads var values as smart-typography markdown,

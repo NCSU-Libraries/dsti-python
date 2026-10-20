@@ -38,6 +38,8 @@ website:
         menu:
           - href: activities/time-use.qmd
             text: "How people spend their day (time use)"
+          - href: activities/cafe.qmd
+            text: "Campus café sales"
       - href: cheatsheet.qmd
         text: Cheat sheet
     right:

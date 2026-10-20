@@ -6,7 +6,7 @@ It copies two things into the output dir (Quarto sets QUARTO_PROJECT_OUTPUT_DIR;
 without it, the output dir is site/_site):
 
 - notebooks/*.ipynb -> <output dir>/notebooks/ (the session notebooks and the activity notebooks)
-- data/*.csv        -> <output dir>/data/ (the time-use activity's files; its notebook downloads them from the site)
+- data/*.csv        -> <output dir>/data/ (the activities' data; each activity notebook downloads its files from the site)
 
 The files go only into the output. Copied into site/, Quarto would render the
 .ipynb files as pages and rewrite the links.

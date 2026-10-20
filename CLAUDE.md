@@ -36,6 +36,7 @@ whole restart story.
 | `notebooks/activity-*.ipynb` | Follow-along activities for after the session, learner and `-solutions` versions |
 | `tools/build_activities.py` | Generates the activity notebooks from one module per activity in `tools/activities/` (auto-discovered) |
 | `data/` | The activities' CSVs. `atus_*.csv` come from the DSTI teaching dataset via `tools/atus_data.py` |
+| `data/cafe_sales.csv` | The café activity's data: synthetic, copied byte for byte from `agentic-coding-with-claude/starters/cafe/cafe_sales.csv` (CC BY 4.0). Its planted problems are on purpose; don't clean the file |
 | `site/activities/` | One page per activity: finish line, setup, steps, check numbers, data dictionary |
 | `tools/copy_notebooks.py` | Quarto post-render step: copies `notebooks/*.ipynb` and `data/*.csv` into `site/_site/` for the Download links |
 | `site/` | Quarto website plus the reveal.js deck (`site/slides/index.qmd`) |

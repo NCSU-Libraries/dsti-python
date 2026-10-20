@@ -1,0 +1,215 @@
+---
+title: "Activity: Campus Café Sales"
+subtitle: "Find the bad price, merge a renamed item, then ask what sells in hot and cold weather. About 35 minutes."
+---
+
+You help run a campus café. The manager wants to know which menu items earn the most money, and whether the weather
+changes what people buy. You have the register's sales for the school year, one row per menu item per day. The café
+and its sales are made up, and the file has problems in it, on purpose.
+
+**The question:** which menu items earn the most money, and does the weather change what people buy?
+
+You'll start with plain Python, the tools from the intro session, and find the problems. Then you'll fix them with
+Polars, a library built for tables, which works on a whole column at once. Then you'll answer the question and draw one
+chart.
+
+::: {.callout-note collapse="false"}
+## Your finish line
+
+You're done when you have all of these:
+
+- The \$45 latte fixed and "Cold Brew Coffee" renamed: 10 items, 264 rows each
+- A **revenue** column, and the table of revenue by item
+- The count of closed days, left out of the weather question
+- The weather table for Iced Tea and Hot Chocolate
+- One chart: revenue by month
+:::
+
+## Before you start
+
+You need the `dss-python` project and JupyterLab from the [Setup page](../setup.qmd). Using Colab instead? Jump to
+[the Colab box](#on-colab) below.
+
+### 1. Add Polars
+
+You only need Polars from Part 2, so any time before then works. Open a terminal in your `dss-python` folder.
+JupyterLab has one: **File → New → Terminal**. Run:
+
+::: {.prompt .prompt-shell}
+```bash
+uv add polars
+```
+:::
+
+If the notebook is already open, choose **Kernel → Restart Kernel** so it can find Polars.
+
+Using conda? Run this in your `dss-python` environment instead:
+
+::: {.prompt .prompt-shell}
+```bash
+conda install -c conda-forge polars
+```
+:::
+
+### 2. Download the learner notebook
+
+Get it the same way you got the session notebook:
+[Download the activity notebook](../{{< var activities.cafe.download.learner >}}){download="" data-noresolveinput=""}.
+Your browser saves it in your Downloads folder. Drag it onto JupyterLab's file list in the left sidebar, or click the
+**Upload** button (↑) above the list. Then double-click it.
+
+### 3. The data comes with the notebook
+
+The notebook's first cell downloads the data file into the notebook's folder, so there's nothing to do. Want the file
+yourself? Save it in the same folder as the notebook:
+[cafe_sales.csv](../{{< var activities.cafe.data.sales >}}){download=""}.
+
+::: {#on-colab .callout-tip}
+## On Colab instead?
+
+Open the [learner notebook in Colab]({{< var activities.cafe.colab.learner >}}), sign in, and click **Copy to
+Drive**. Work in the tab titled **Copy of activity-cafe.ipynb**. Polars is already installed there, and the first
+cell downloads the data.
+:::
+
+## What you'll do
+
+Work down the notebook from the top. Each section starts with a short explanation. Where a cell holds only a `#`
+comment, write the code under it, then run it with {{< kbd Shift-Enter >}}.
+
+### Part 1: Plain Python
+
+1. **Read the file.** The `csv` module turns each row into a dictionary.
+2. **A revenue function.** Write `revenue`: units sold times unit price, as numbers.
+3. **Total revenue by item.** A dictionary keeps a running total for each item, and two things look off.
+4. **Find the odd price.** One latte has a price that can't be right.
+
+That was a lot of looping. Part 2 does the work a whole column at a time.
+
+### Part 2: Polars
+
+5. **Load the data with Polars.** One line reads the whole file into a table, with real dates.
+6. **Fix the two problems.** Correct the \$45 latte, and give "Cold Brew Coffee" its old name back.
+7. **Revenue by item.** Add a revenue column, then total it by item and for the whole year.
+8. **Closed days.** Count the days when nothing sold.
+9. **Does the weather matter?** Leave out the closed days, then compare Iced Tea and Hot Chocolate in cold, mild and
+   hot weather.
+10. **One chart.** Revenue by month.
+
+## Check your numbers
+
+### Part 1: plain Python
+
+- **Rows:** 2,640.
+- **The odd price:** one row, a Latte on 2025-09-16 with 88 sold at 45.00.
+
+Revenue by item, with the names as they are in the file. The Latte total includes the typo:
+
+| Item | Revenue |
+| ---------------- | ---------- |
+| Drip Coffee | 55638.5 |
+| Latte | 67811.5 |
+| Cold Brew | 19324.75 |
+| Chai Latte | 27963.25 |
+| Iced Tea | 12215.5 |
+| Hot Chocolate | 12645.5 |
+| Croissant | 23715.25 |
+| Blueberry Muffin | 19944.0 |
+| Bagel | 15966.5 |
+| Breakfast Sandwich | 32799.0 |
+| Cold Brew Coffee | 16047.0 |
+
+### Part 2: Polars
+
+After the fixes (section 6), there are 10 items, with 264 rows each: one for every day, from August 18 to May 8.
+
+Total revenue for the year is **\$300,506.75**. By item, biggest earner first:
+
+| Item | Revenue | Units |
+| ---------------- | ---------- | ------ |
+| Latte | 64247.5 | 13868 |
+| Drip Coffee | 55638.5 | 23351 |
+| Cold Brew | 35371.75 | 8113 |
+| Breakfast Sandwich | 32799.0 | 5046 |
+| Chai Latte | 27963.25 | 5887 |
+| Croissant | 23715.25 | 7297 |
+| Blueberry Muffin | 19944.0 | 6648 |
+| Bagel | 15966.5 | 5806 |
+| Hot Chocolate | 12645.5 | 3613 |
+| Iced Tea | 12215.5 | 4442 |
+
+Drip Coffee sells the most units, and Latte earns the most. Cold Brew's total is both names together.
+
+There are **33 closed days**, and 231 open days.
+
+Average units per open day, by weather:
+
+| Item | Weather | Units per day | Days |
+| ------------- | -------------- | ------ | ---- |
+| Hot Chocolate | 60–79°F | 13.4 | 110 |
+| Hot Chocolate | 80°F or warmer | 6.4 | 34 |
+| Hot Chocolate | below 60°F | 22.1 | 87 |
+| Iced Tea | 60–79°F | 21.2 | 110 |
+| Iced Tea | 80°F or warmer | 27.3 | 34 |
+| Iced Tea | below 60°F | 13.6 | 87 |
+
+Hot Chocolate sells about three times as much below 60°F as at 80°F or warmer. Iced Tea goes the other way.
+
+### The chart
+
+The chart has one bar for each month, August 2025 to May 2026. The bar heights are:
+
+| Month | Revenue |
+| ------- | ---------- |
+| Aug 2025 | 16480.0 |
+| Sep 2025 | 35160.0 |
+| Oct 2025 | 39232.0 |
+| Nov 2025 | 30831.0 |
+| Dec 2025 | 23502.25 |
+| Jan 2026 | 32138.5 |
+| Feb 2026 | 38519.25 |
+| Mar 2026 | 33388.25 |
+| Apr 2026 | 39904.5 |
+| May 2026 | 11351.0 |
+
+August and May are short because the data starts on August 18 and ends on May 8. December is short because the café
+was closed from December 17 to January 6.
+
+## About the data
+
+Each row is one menu item on one day.
+
+| Column | Meaning | Values and codes |
+| ------------- | -------- | ------------ |
+| `date` | The day, 264 of them: August 18, 2025 to May 8, 2026 | Like 2025-08-18 |
+| `item` | The menu item | 11 names, because one item is renamed partway through |
+| `category` | The kind of item | Coffee, Tea, Other drinks, Bakery or Food |
+| `units_sold` | How many were sold that day | A whole number. On a closed day it is 0 for every item. |
+| `unit_price` | The price of one, in dollars | Like 2.25 |
+| `high_temp_f` | That day's campus high | °F |
+
+Three things to know about the file:
+
+- A new register started calling "Cold Brew" "Cold Brew Coffee" on January 7. It's the same drink.
+- One Latte row, on September 16, 2025, has a price of 45.00. It should be 4.50.
+- Some prices went up on January 7. That's real, so leave it.
+
+**The café, the menu and the sales are made up.** The data was made for the Libraries' [Agentic Coding with Claude](https://ncsu-libraries.github.io/agentic-coding-with-claude/)
+workshop, and it's licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The results describe this
+pretend café, not any real one.
+
+## Stuck?
+
+- **The filled notebook** has every answer:
+  [download it](../{{< var activities.cafe.download.filled >}}){download="" data-noresolveinput=""}, or
+  [open it in Colab]({{< var activities.cafe.colab.filled >}}).
+- **The [cheat sheet](../cheatsheet.qmd)** has JupyterLab keys, syntax and common errors on one page.
+- **Help with setup or access:** [go.ncsu.edu/getdatahelp]({{< var help >}}).
+
+| What you see | What to do |
+| ---------- | -------- |
+| `ModuleNotFoundError` for `polars` | Run `uv add polars` in `dss-python`, then choose **Kernel → Restart Kernel**. |
+| `FileNotFoundError` for `cafe_sales.csv` | Run the **Get the data** cell near the top first. Or save the CSV file in the notebook's folder, as in step 3 of Before you start. |
+| `TypeError` that mentions `str` | Values from the `csv` module are text. Wrap them in `int()` or `float()` before you multiply or compare them. |
+
+<p class="small-muted">Numbers checked with Polars {{< var activities.cafe.polars >}}.</p>
