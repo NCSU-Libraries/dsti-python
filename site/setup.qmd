@@ -1,13 +1,14 @@
 ---
 title: "Set up Python"
-subtitle: "About 10 minutes. Do it before the session if you can; we'll also do it together at the start."
+subtitle: "About 15 minutes. Do it before the session if you can; we'll also do it together at the start."
 ---
 
 ::: {.callout-note}
-## Stuck? Keep going in Colab
+## Stuck? Colab is the backup
 
-The install is the first 12 minutes of the session. Everything after it runs in Google Colab, in your browser, so a
-stuck install won't hold you back: flag a helper and keep going. We'll finish it during the break.
+We do the install together at the start of the session. Around 9:30, if your notebook still won't run, switch to
+Google Colab ([step 10](#colab)) and keep going. A helper will finish your install at the break or during practice
+time.
 :::
 
 ## 1. Open a terminal
@@ -59,7 +60,7 @@ uv --version
 
 You should see a version number, like `uv {{< var checked.uv >}}`.
 
-## 4. Make the workshop folder
+## 4. Make your project folder
 
 ::: {.prompt .prompt-shell}
 ```bash
@@ -68,39 +69,158 @@ cd dss-python
 ```
 :::
 
+The folder is made in your home folder: `/Users/<you>/dss-python` on a Mac, `C:\Users\<you>\dss-python` on Windows.
+uv puts three starter files in it, `pyproject.toml`, `main.py` and `README.md`. Leave them alone.
+
 - `--python {{< var python >}}` matches the Python that Colab uses, so code behaves the same in both places.
 - `--vcs none` skips git, so a Mac without Apple's developer tools doesn't ask to install them.
 
-## 5. Start JupyterLab
+## 5. Add JupyterLab and matplotlib
 
 ::: {.prompt .prompt-shell}
 ```bash
-uv run --with jupyter jupyter lab
+uv add jupyterlab matplotlib
 ```
 :::
 
-The first run downloads Python {{< var python >}} and JupyterLab. On shared Wi-Fi this is the slowest step, so give it
-a few minutes. Then your browser opens JupyterLab.
+uv downloads Python {{< var python >}}, JupyterLab and matplotlib into one environment, a hidden `.venv` folder inside
+`dss-python`. JupyterLab, its Python and matplotlib all live there, so the bar plot just works.
 
-1. Choose **New → Notebook**.
-2. Type `1 + 1` in the first cell and press {{< kbd Shift-Enter >}}.
-3. You should see `2`.
+**This is the slow step**, especially on shared Wi-Fi. It's done when your prompt comes back. **Download the notebook
+(step 6) while you wait.**
+
+## 6. Download the notebook {#notebook}
+
+- [Download the learner notebook]({{< var download.learner >}}){download="" data-noresolveinput=""}: blank code to write with us. This is the
+  one you need.
+- [Download the filled notebook]({{< var download.filled >}}){download="" data-noresolveinput=""}: every answer, to check your work.
+
+Your browser saves them in your Downloads folder.
+
+::: {.callout-tip collapse="true"}
+## Prefer the terminal?
+
+Run one of these inside `dss-python`, once step 5 has finished (or in a second terminal window). The notebook lands in
+your project folder, so you can skip dragging it in (step 7).
+
+::: {.panel-tabset}
+### Mac
+
+::: {.prompt .prompt-shell}
+```bash
+curl -LO https://ncsu-libraries.github.io/dsti-python/notebooks/introduction-to-programming-with-python.ipynb
+```
+:::
+
+### Windows (PowerShell)
+
+Type `curl.exe`, with the `.exe`. Plain `curl` in PowerShell is a different tool.
+
+::: {.prompt .prompt-shell}
+```powershell
+curl.exe -LO https://ncsu-libraries.github.io/dsti-python/notebooks/introduction-to-programming-with-python.ipynb
+```
+:::
+:::
+:::
+
+## 7. Start JupyterLab and open the notebook
+
+Once step 5 is finished, run this in `dss-python`:
+
+::: {.prompt .prompt-shell}
+```bash
+uv run jupyter lab
+```
+:::
+
+Your browser opens JupyterLab. **Leave the terminal open.** It's running JupyterLab.
+
+1. Open your Downloads folder, and drag the notebook onto JupyterLab's file list in the left sidebar. Or click the
+   **Upload** button (↑) above the file list, and choose the file.
+2. Double-click the notebook to open it.
+3. Scroll to **1. Python and JupyterLab**. Click the bar plot cell under **Example: a simple bar plot**, and press
+   {{< kbd Shift-Enter >}}.
+
+**A chart means it all works:** Python, JupyterLab and matplotlib. No chart by about 9:30? Flag a helper, or switch to
+Colab ([step 10](#colab)) and keep going.
+
+## 8. Stop, and start again later
+
+Save your work with {{< kbd Cmd-S >}} (Mac) or {{< kbd Ctrl-S >}} (Windows).
 
 To stop JupyterLab, go back to the terminal and press {{< kbd Ctrl-C >}} twice.
 
-## If something goes wrong
+Next time, open a terminal and run:
 
-| What you see | What to do |
-| --- | --- |
-| `uv: command not found` | Open a new terminal. Still missing on a Mac? Run `source $HOME/.local/bin/env`. |
-| "running scripts is disabled" (Windows) | Use the exact command shown above, with `-ExecutionPolicy ByPass`. |
-| Antivirus or SmartScreen blocks the install | Flag a helper, or ask at [go.ncsu.edu/getdatahelp]({{< var help >}}). |
-| The browser didn't open | Copy the `http://localhost:…` link from the terminal and paste it into your browser. |
-| The download is slow | Keep going in Colab. You can finish the install during the break. |
+::: {.prompt .prompt-shell}
+```bash
+cd dss-python
+uv run jupyter lab
+```
+:::
 
-## 6. Open the notebook in Colab
+Then double-click your notebook in the file list.
 
-Most of the session happens here.
+## 9. Alternative: conda {#conda}
+
+Already use Anaconda, Miniconda or Miniforge? Use these commands instead of steps 2 to 5. We show uv in the room, but
+helpers can still help you with conda.
+
+::: {.panel-tabset}
+### Mac
+
+Open Terminal: press {{< kbd Cmd-Space >}}, type **Terminal**, and press {{< kbd Enter >}}.
+
+### Windows
+
+Open **Anaconda Prompt** or **Miniforge Prompt** from the Start menu. Plain PowerShell usually doesn't know `conda`.
+:::
+
+::: {.prompt .prompt-shell}
+```bash
+{{< var conda.create >}}
+conda activate dss-python
+mkdir dss-python
+cd dss-python
+jupyter lab
+```
+:::
+
+- The first command is one long line. Use the copy button.
+- `-c conda-forge --override-channels` uses only the conda-forge channel. It skips Anaconda's default channel, so
+  conda won't ask you to accept its Terms of Service.
+- `python={{< var python >}}` matches uv and Colab.
+- The conda download is bigger and slower than uv's. Start it early.
+
+The last command opens JupyterLab. Now download the notebook (step 6), drag it into the file list, double-click it, and
+run the bar plot cell (step 7). Skip the `uv run jupyter lab` command: JupyterLab is already running.
+
+**Next time**, in the same kind of terminal:
+
+::: {.prompt .prompt-shell}
+```bash
+conda activate dss-python
+cd dss-python
+jupyter lab
+```
+:::
+
+**To add a package**, with `dss-python` active:
+
+::: {.prompt .prompt-shell}
+```bash
+conda install -c conda-forge polars
+```
+:::
+
+No conda yet? We suggest uv, so use steps 2 to 5. If you want conda anyway,
+[Miniforge](https://conda-forge.org/download/) has a Mac installer (`.pkg`) and a Windows installer (`.exe`).
+
+## 10. Backup: Google Colab {#colab}
+
+Colab runs in your browser, so there's nothing to install. Use it if your install is stuck, or on a Chromebook or
+tablet.
 
 1. Open the [learner notebook in Colab]({{< var colab.learner >}}).
 2. Sign in with your Google account.
@@ -109,19 +229,28 @@ Most of the session happens here.
 
 A "not authored by Google" warning means you're in the original tab. Switch to your copy.
 
-## 7. Take your work home
+### Move your Colab work to your laptop
 
-In Colab, choose **File → Download → Download .ipynb**. Save it in your `dss-python` folder. Then, in the terminal:
+Haven't installed Python yet? Do steps 1 to 5 first. Then, in Colab, choose **File → Download → Download .ipynb**. Start
+JupyterLab as in step 7 and drag the file into its file list.
 
-::: {.prompt .prompt-shell}
-```bash
-cd dss-python
-uv run --with jupyter jupyter lab
-```
-:::
+## If something goes wrong
 
-Open the notebook from JupyterLab's file list. The bar plot needs matplotlib. Stop JupyterLab, run
-`uv add matplotlib`, and start it again.
+| What you see | What to do |
+| --- | --- |
+| `uv: command not found` | Open a new terminal. Still missing on a Mac? Run `source $HOME/.local/bin/env`. |
+| "running scripts is disabled" (Windows) | Use the exact command shown above, with `-ExecutionPolicy ByPass`. |
+| Antivirus or SmartScreen blocks the install | Flag a helper, or ask at [go.ncsu.edu/getdatahelp]({{< var help >}}). |
+| Mac "command line developer tools" prompt | Click **Not Now**. You don't need them. |
+| The download is slow | Keep going in Colab ([step 10](#colab)). You can finish the install during the break. |
+| The browser didn't open | Copy the `http://localhost:…` link from the terminal and paste it into your browser. |
+| The notebook isn't in JupyterLab's file list | Drag it in again, and check you started JupyterLab inside `dss-python`. |
+| `ModuleNotFoundError: No module named 'matplotlib'` | This JupyterLab isn't your project's. Press {{< kbd Ctrl-C >}} twice, then run `cd dss-python`, then `uv run jupyter lab` (with `uv run`). |
+| ``Failed to spawn: `jupyter` `` | Run `uv add jupyterlab matplotlib` in `dss-python` first. |
+| A file named `…(1).ipynb` | It's a second download. Use either one. |
+| Chromebook or tablet | Use the Colab backup ([step 10](#colab)). |
+| `conda: command not found` (or "not recognized") | On Windows, use Anaconda Prompt or Miniforge Prompt. On a Mac, open a new terminal. |
+| conda asks you to accept Terms of Service | Use the exact command shown in step 9, with `-c conda-forge --override-channels`. |
 
 <p class="small-muted">Checked with uv {{< var checked.uv >}} on {{< var checked.date >}}. uv changes often; if a
 screen looks different, the <a href="https://docs.astral.sh/uv/getting-started/installation/">official install

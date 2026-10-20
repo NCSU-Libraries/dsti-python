@@ -4,20 +4,27 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-Materials for **Introduction to Programming with Python**, a 2-hour NC State University Libraries Data Science Services session
+Materials for **Introduction to Programming with Python**, a 2.5-hour NC State University Libraries Data Science Services session
 taught by Alp Tezbasaran at the Data Science Training Intensive (DSTI).
 
 - **When and where:** Tuesday 2026-10-20, DSTI Day 2's Python track, East Learning Lab A. Check-in is at 8:30, the
-  slot runs 9:00–11:30, and the all-track wrap-up is at 11:30 in the same room. The plan uses 120 of the 150 minutes;
-  the home page shows 11:00–11:30 as practice and questions. Facts live in `event` in `site/_variables.yml`.
+  slot runs 9:00–11:30, and the all-track wrap-up is at 11:30 in the same room. The plan uses 130 of the 150 minutes;
+  the home page shows 11:10–11:30 as practice, questions and install help. Facts live in `event` in `site/_variables.yml`.
 - **Lesson plan:** `~/Desktop/projects/dss/dsti/python/Lesson_Plan_Blended_Accelerated.md`. It's private and never goes
   in this repo. It times every segment; the notebook's sections 1–10 are its Sections 4–13.
 - **Contacts:** workshop questions go to lib-datascienceservices@ncsu.edu. Setup and access help goes to
   go.ncsu.edu/getdatahelp.
 
-**Design (agreed 2026-10-19):** install Python with uv at the start, hard time-boxed to 0:17, then everything in Google
-Colab from one notebook pair: a learner notebook and a filled one. Both are condensed from the getting-started-with-python
-Basics and Loops and Functions notebooks. The deck summarizes each segment; it never reproduces notebook cells.
+**Design (changed 2026-10-20: local first, Colab as the backup):** attendees install Python with uv, make a `dss-python`
+project, run `uv add jupyterlab matplotlib`, download the learner notebook from the site, and work in JupyterLab on their
+own laptop. A checkpoint at 0:28 (learners see "around 9:30") sends anyone whose bar plot cell won't run to Google Colab,
+the backup, with the same notebook. Conda (conda-forge only) is a documented alternative to uv on the Setup page, not
+demoed. One notebook pair: a learner notebook and a filled one, condensed from the getting-started-with-python Basics and
+Loops and Functions notebooks. The deck summarizes each segment; it never reproduces notebook cells.
+
+`uv add jupyterlab matplotlib` puts the server, the kernel and matplotlib in the project's one `.venv`. uv's own docs
+prefer `uv run --with jupyter`; one environment is deliberately simpler for beginners, and `uv run jupyter lab` is the
+whole restart story.
 
 ## Layout
 
@@ -26,8 +33,9 @@ Basics and Loops and Functions notebooks. The deck summarizes each segment; it n
 | `notebooks/introduction-to-programming-with-python.ipynb` | Learner notebook: blank code under comment scaffolds |
 | `notebooks/introduction-to-programming-with-python-solutions.ipynb` | Filled notebook: every exercise answered |
 | `tools/build_notebooks.py` | Generates both notebooks from getting-started-with-python at pinned commit `9b288fa` |
+| `tools/copy_notebooks.py` | Quarto post-render step: copies `notebooks/*.ipynb` into `site/_site/notebooks/` for the Download links |
 | `site/` | Quarto website plus the reveal.js deck (`site/slides/index.qmd`) |
-| `site/_variables.yml` | Facts used on several pages and in the deck: event, links, Python and uv versions |
+| `site/_variables.yml` | Facts used on several pages and in the deck: event, links, downloads, the conda command, Python and uv versions |
 | `tools/check_links.py` | Checks every link and image in `site/_site` (`--web` also requests external URLs) |
 | `tools/shoot.mjs` | Headless Chrome screenshots of pages or slides. Gives a `slide` index in reading order |
 
@@ -36,7 +44,7 @@ Basics and Loops and Functions notebooks. The deck summarizes each segment; it n
 ```bash
 Q=/Applications/RStudio.app/Contents/Resources/app/quarto/bin/quarto   # Quarto isn't on PATH on this Mac
 python3 tools/build_notebooks.py --src ~/Desktop/getting-started-with-python   # regenerate both notebooks
-$Q render site                                                         # full build into site/_site
+$Q render site                                                         # full build into site/_site (+ notebooks/ via post-render)
 $Q render site/slides/index.qmd                                        # the deck only
 python3 tools/check_links.py                                           # after a render
 # Run the filled notebook top to bottom on Colab's Python; only cells tagged raises-exception may raise
@@ -60,12 +68,22 @@ pushes.
 - **The AI workshop list is in two places**: the home page's "More AI workshops from us" and the deck slide of the
   same name. Titles drop the "Data Science Special Topics:" prefix. Change both together.
 - **The deck sets `from: markdown-smart`** so quotes in commands stay straight; keep it, or `"irm …"` turns curly.
-- **Python version:** `uv init --python` on the Setup page must match Colab's Python (`python` in
-  `site/_variables.yml`). Check with `!python --version` in Colab before each run of the session.
+- **Python version:** `uv init --python` on the Setup page and `python=` in `conda.create` must match Colab's Python
+  (`python` in `site/_variables.yml`). Check with `!python --version` in Colab before each run of the session.
+- **The learner flow is in five places**: the Setup page, the deck's install and JupyterLab sections, the cheat sheet's
+  commands table, the notebook's *Open this notebook again later*, and the lesson plan's Sections 2–3. Change them
+  together, including the 9:30 checkpoint.
 
 ## Gotchas
 
 - **The Colab links only work once the repo is public on GitHub** and the notebooks are pushed.
+- **Quarto smartens `{{< var >}}` values**, even inside code blocks: a bare `--` becomes an en dash. Escape hyphens in
+  `_variables.yml` (`\\-\\-`), as `conda.create` does, and grep the rendered HTML after changing one.
+- **Download links** to `notebooks/*.ipynb` carry `download` and `data-noresolveinput`; without the latter Quarto warns
+  "Unable to resolve link target", because the files only exist after post-render. Navbar items can't carry
+  `download`, so the navbar links to the Setup page's `#notebook` step instead.
+- **Windows PowerShell's `curl` is an alias** for `Invoke-WebRequest`. The Setup page's optional terminal download uses
+  `curl.exe`.
 - **The home page checklist stores its state under the localStorage key `dsti-python-finish-line`.** Every
   ncsu-libraries.github.io site shares one origin, so a generic key would collide with other workshop sites.
 - **Quarto slides:**

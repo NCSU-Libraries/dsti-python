@@ -3,10 +3,12 @@ project:
   output-dir: _site
   resources:
     - images/
+  # Copies notebooks/*.ipynb into _site/notebooks/ for the Download links. Runs from site/.
+  post-render: ../tools/copy_notebooks.py
 
 website:
   title: "Introduction to Programming with Python"
-  description: "Two hours from installing Python to writing your own function, from NC State University Libraries' Data Science Services."
+  description: "From installing Python to writing your own function, on your own laptop, from NC State University Libraries' Data Science Services."
   site-url: "https://ncsu-libraries.github.io/dsti-python/"
   repo-url: "https://github.com/NCSU-Libraries/dsti-python"
   favicon: images/favicon.svg
@@ -26,10 +28,12 @@ website:
         text: Setup
       - text: Notebooks
         menu:
+          - href: setup.qmd#notebook
+            text: "Download the notebooks"
           - href: "https://colab.research.google.com/github/NCSU-Libraries/dsti-python/blob/main/notebooks/introduction-to-programming-with-python.ipynb"
-            text: "Learner notebook (Colab)"
+            text: "Learner notebook in Colab (backup)"
           - href: "https://colab.research.google.com/github/NCSU-Libraries/dsti-python/blob/main/notebooks/introduction-to-programming-with-python-solutions.ipynb"
-            text: "Filled notebook (Colab)"
+            text: "Filled notebook in Colab"
       - href: cheatsheet.qmd
         text: Cheat sheet
     right:

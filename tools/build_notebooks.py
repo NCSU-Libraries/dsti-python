@@ -231,8 +231,8 @@ def code(slug, learner, fadd=None, filled=None):
 # ----------------------------------------------------------------------------
 
 OUTCOMES = """1. Install Python with uv
-2. Understand the differences between Python and Jupyter/Google Colab
-3. Navigate the Google Colab environment
+2. Understand the differences between Python, Jupyter, JupyterLab and Google Colab
+3. Navigate the JupyterLab environment
 4. Create variables
 5. Use basic data types and data structures, such as lists and dictionaries
 6. Use arithmetic, comparison, and logical operators
@@ -243,13 +243,18 @@ OUTCOMES = """1. Install Python with uv
 CREDIT = ("Built from the Getting Started with Python workshops (Basics; Loops and Functions) "
           "by Alp Tezbasaran, with credit to Selene R. Schmittling.")
 
+# Where to work: both titles open with these two paragraphs (local first, Colab as the backup)
+WHERE = """**In JupyterLab on your laptop?** This file is in your `dss-python` folder. Save often with Cmd/Ctrl+S.
+
+**Using Google Colab instead?** Click **Copy to Drive** in the toolbar first, then work in the new "Copy of …" tab."""
+
 TITLE_LEARNER = f"""# Introduction to Programming with Python
 
 Data Science Training Intensive · NC State University Libraries, Data Science Services
 
 {CREDIT}
 
-**First: click Copy to Drive** in the toolbar and work in the new "Copy of …" tab. Edits in this tab aren't saved.
+{WHERE}
 
 This is the learner notebook: write the code under each comment, with the instructor. The [filled notebook]({URL_FILLED}) has every answer.
 
@@ -257,7 +262,7 @@ This is the learner notebook: write the code under each comment, with the instru
 
 {OUTCOMES}
 
-Colab's AI features stay off today. Workshop site: [{URL_SITE}]({URL_SITE})"""
+We leave AI coding assistants off today. Workshop site: [{URL_SITE}]({URL_SITE})"""
 
 TITLE_FILLED = f"""# Introduction to Programming with Python: Filled
 
@@ -265,7 +270,7 @@ Data Science Training Intensive · NC State University Libraries, Data Science S
 
 {CREDIT}
 
-**First: click Copy to Drive** in the toolbar and work in the new "Copy of …" tab. Edits in this tab aren't saved.
+{WHERE}
 
 This is the filled notebook: every exercise has an answer, so check your work here. During the session, work in the [learner notebook]({URL_LEARNER}).
 
@@ -273,7 +278,20 @@ This is the filled notebook: every exercise has an answer, so check your work he
 
 {OUTCOMES}
 
-Colab's AI features stay off today. Workshop site: [{URL_SITE}]({URL_SITE})"""
+We leave AI coding assistants off today. Workshop site: [{URL_SITE}]({URL_SITE})"""
+
+MODES = """### Command mode and edit mode
+
+JupyterLab has two modes. **Edit mode** (click in a cell, or press Enter) is for typing. **Command mode** (press Esc: a blue bar marks the cell) is for whole cells.
+
+| Key in command mode | What it does |
+|---|---|
+| A / B | Add a cell above / below |
+| M / Y | Make the cell markdown / code |
+| D, D | Delete the cell (Z undoes it) |
+| Cmd/Ctrl+S | Save |
+
+In Colab, the **+ Code** and **+ Text** buttons add cells, and your copy saves to Drive by itself."""
 
 KEEP_GOING = f"""## Keep going
 
@@ -285,12 +303,15 @@ These cover what we skipped: dates and times, type conversion, while loops and f
 - Loops and Functions: [learner]({URL_LOOPS}) · [filled]({URL_LOOPS_F})
 - [Exploratory Data Analysis]({URL_EDA})
 
-**Run this notebook on your laptop**
+**Open this notebook again later**
 
-1. In Colab, choose File → Download → Download .ipynb and save the file in your `dss-python` folder.
-2. In a terminal, go to the folder: `cd dss-python`
-3. Start JupyterLab: `uv run --with jupyter jupyter lab`
-4. The plot in Part 1 needs matplotlib. Run `uv add matplotlib` once.
+1. Open a terminal and go to the folder: `cd dss-python`
+2. Start JupyterLab: `uv run jupyter lab`
+3. Double-click the notebook in the file browser. To stop, save, then press Ctrl+C twice in the terminal.
+
+Set up with conda instead? Run `conda activate dss-python` first, and start JupyterLab with `jupyter lab`.
+
+Worked in Colab today? Choose File → Download → Download .ipynb, start JupyterLab as above, and drag the file into its file browser. Haven't installed Python yet? Follow the Setup page: {URL_SITE}setup.html
 
 **Resources**
 
@@ -320,7 +341,7 @@ MANIFEST = [
     # ---- Part 1 ---------------------------------------------------------
     md("part-1", "# Part 1: Python basics"),
 
-    md("sec-1", "## 1. Python and Colab"),
+    md("sec-1", "## 1. Python and JupyterLab"),
     Copy("B", 7, "## Python vs. Jupyter: What's the Difference?",
          edits=[H("## Python vs. Jupyter: What's the Difference?",
                   "### Python vs. Jupyter: what's the difference?")]),
@@ -329,19 +350,26 @@ MANIFEST = [
                 bold("### Source / Notebook Pane"),
                 bold("### Console / Terminal"),
                 bold("### Variable Inspector"),
-                bold("### Output")]),
+                bold("### Output"),
+                R("Colab environment provides an inspector to view variables in memory.",
+                  "`%whos` lists the variables in memory. Colab also has a Variables panel ({x}).")]),
     Copy("B", 8, "### Example: Creating a simple bar plot",
          edits=[H("### Example: Creating a simple bar plot", "### Example: a simple bar plot")]),
     Copy("B", 10, "# Let's create a simple bar plot with matplotlib"),
     md("note-import",
-       "`import` loads a package. Colab has the common ones; on your laptop you'd run `uv add matplotlib`. "
-       "Open the Variables panel ({x}): `counts` and `regions` are there."),
+       "`import` loads a package. On your laptop, setup installed matplotlib (`uv add` or `conda create`); "
+       "Colab comes with the common ones. Run the next cell to list what's in memory: "
+       "`counts` and `regions` are there."),
+    code("whos", "%whos"),
 
     md("sec-2", "## 2. Notebook basics"),
     Copy("B", 12, "## Notebooks & Scripts",
          edits=[H("## Notebooks & Scripts", "### Notebooks and scripts")]),
     Copy("B", 13, "### Code cells and writing Python code",
-         edits=[bold("#### Running a code cell"), bold("#### Comments and code")]),
+         edits=[bold("#### Running a code cell"), bold("#### Comments and code"),
+                R("Click the **Play icon** in the left gutter of the cell",
+                  "Click the **Run** button (▶) in the notebook toolbar. In Colab, it's the play icon beside the cell"),
+                R("in the **Runtime** menu", "in the **Run** menu (**Runtime** in Colab)")]),
     Copy("B", 14, "Code contains instructions that are executed when you run them. These are examples of lines of code:"),
     Copy("B", 15, "print('This is a line of code')"),
     Copy("B", 16, "4 * 4"),
@@ -349,8 +377,12 @@ MANIFEST = [
     Copy("B", 18, "# 1 + 1"),
     Copy("B", 19, "By default, in Jupyter Notebooks and Google Colab the last line that produces a value in a code cell is printed. To print a value that is not at the end of a code cell use the `print()` function"),
     Copy("B", 20, "print('This string is printed using the print function')"),
+    md("modes", MODES),
     Copy("B", 23, "#### Finding Help in Colab",
-         edits=[H("#### Finding Help in Colab", "### Finding help")]),
+         edits=[H("#### Finding Help in Colab", "### Finding help"),
+                R("Google Colab allows you to look up documentation on functions.",
+                  "JupyterLab and Colab let you look up documentation on functions."),
+                R("This will bring up a help window.", "This shows its help.")]),
     Copy("B", 24, "# Run this cell to find out what the built-in Python function \"len\" does"),
     md("note-indent", "Indentation is part of Python's grammar. You'll see why with `if` in Part 2."),
 
@@ -364,7 +396,8 @@ MANIFEST = [
          edits=[R("ahaed", "ahead")]),
     Copy("B", 30, "# = to assign"),
     Copy("B", 31, "# Store a number in the variable \"number\""),
-    Copy("B", 32, "**Try it yourself**: Calculate the sum of `number` and `number`, store it in a variable `number_plus`, and print out the value of `number_plus`"),
+    Copy("B", 32, "**Try it yourself**: Calculate the sum of `number` and `number`, store it in a variable `number_plus`, and print out the value of `number_plus`",
+         edits=[R("like Colab", "like JupyterLab or Colab")]),
     Copy("B", 33, "# Store the value of \"number\" + \"number\" in \"number_plus\" and print the value"),
     Copy("B", 36, "# Data Types",
          edits=[H("# Data Types", "### Data types"),

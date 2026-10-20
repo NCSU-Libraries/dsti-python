@@ -27,13 +27,13 @@ format:
 
 ::: {.cards .two style="margin-top:28px"}
 ::: {.card}
-[Want to install Python today?]{.card-title}
-Start now: **Setup** on the materials page.
+[Want a head start?]{.card-title}
+Start **Setup** on the materials page now.
 :::
 
 ::: {.card .red}
-[No laptop install?]{.card-title}
-That's fine. Everything after the install runs in Google Colab, in your browser.
+[Install stuck?]{.card-title}
+**Colab is the backup**: the same notebook, in your browser.
 :::
 :::
 :::
@@ -61,8 +61,8 @@ Our team comes from a variety of academic backgrounds, including nuclear enginee
 
 <ul class="finish" style="font-size:0.58em;line-height:1.35">
 <li>Install Python with uv</li>
-<li>Understand the differences between Python and Jupyter/Google Colab</li>
-<li>Navigate the Google Colab environment</li>
+<li>Understand the differences between Python, Jupyter, JupyterLab and Google Colab</li>
+<li>Navigate the JupyterLab environment</li>
 <li>Create variables</li>
 <li>Use basic data types and data structures, such as lists and dictionaries</li>
 <li>Use arithmetic, comparison, and logical operators</li>
@@ -73,7 +73,7 @@ Our team comes from a variety of academic backgrounds, including nuclear enginee
 
 # Install Python with uv {.divider background-color="#CC0000"}
 
-[12 minutes, together]{.eyebrow}
+[15 minutes, together]{.eyebrow}
 
 ## The pieces
 
@@ -90,12 +90,12 @@ The small tool that installs Python and packages for you.
 
 ::: {.card}
 [JupyterLab]{.card-title}
-The notebook app on your laptop.
+The notebook app on your laptop. Today's workspace.
 :::
 
 ::: {.card .red}
 [Colab]{.card-title}
-The same notebook idea, on Google's computers. We use it for the rest of class.
+The same notebooks on Google's computers. Our backup.
 :::
 :::
 
@@ -123,21 +123,44 @@ Open **PowerShell**: Start, type "PowerShell"
 
 <div class="type shell" style="margin-top:20px">uv &#45;&#45;version</div>
 
-## A folder, and JupyterLab
+## Your project folder
 
-::: {.two-col .even}
-::: {}
-<div class="type shell">uv init &#45;&#45;python 3.13 &#45;&#45;vcs none dss-python<br>cd dss-python<br>uv run &#45;&#45;with jupyter jupyter lab</div>
+<div class="type shell">uv init &#45;&#45;python 3.13 &#45;&#45;vcs none dss-python<br>cd dss-python<br>uv add jupyterlab matplotlib</div>
 
-The first run downloads Python and JupyterLab: the slow step.
+::: {style="font-size:0.8em;margin-top:26px"}
+- A folder with its own Python
+- `uv add` downloads Python, JupyterLab and matplotlib: **the slow step**
+- While it runs: download the notebook from **Setup**
 :::
 
-::: {.small}
-- When the browser opens, make a new notebook and run `1 + 1`
-- Leave it running
-- <kbd>Ctrl</kbd>+<kbd>C</kbd> in the terminal stops it at the end of class
+## Already use conda?
+
+```{=html}
+<div class="type shell" style="font-size:0.5em">{{< var conda.create >}}<br>conda activate dss-python<br>mkdir dss-python<br>cd dss-python<br>jupyter lab</div>
+```
+
+::: {style="font-size:0.8em;margin-top:26px"}
+- Windows: use **Anaconda Prompt**
+- Then the same notebook steps
+- Steps on **Setup**
 :::
+
+# Your notebook in JupyterLab {.divider background-color="#CC0000"}
+
+[Everything from here runs on your laptop]{.eyebrow}
+
+## Open the notebook
+
+1. Download the learner notebook from **{{< var go >}}**, then **Setup**
+2. Run `uv run jupyter lab`, inside `dss-python`. Leave that terminal open
+3. Drag the notebook into the file browser, then double-click it
+4. Run the bar plot cell
+
+::: {.card .red style="margin-top:22px"}
+Around 9:30, no chart yet? Switch to **Colab** and keep going. A helper finishes your install at the break.
 :::
+
+[Checkpoint: the bar plot cell, section 1]{.pill}
 
 ## If you see...
 
@@ -146,17 +169,15 @@ The first run downloads Python and JupyterLab: the slow step.
 | `uv: command not found` | Open a **new** terminal, or run `source $HOME/.local/bin/env` |
 | Mac offers "command line developer tools" | **Not Now** is fine |
 | Windows SmartScreen or antivirus warning | Flag a helper |
+| `ModuleNotFoundError: No module named 'matplotlib'` | <kbd>Ctrl</kbd>+<kbd>C</kbd>, then `cd dss-python`, then `uv run jupyter lab` |
+| The notebook isn't in the file list | Drag it in again. Check you started JupyterLab inside `dss-python` |
 | Still stuck | Flag a helper: we finish during the break |
 
 ::: {.statement style="margin-top:34px"}
-At 0:17 we all move to *Colab*.
+Around 9:30: no chart? Switch to *Colab*.
 :::
 
-# Google Colab {.divider background-color="#CC0000"}
-
-[Everything from here runs in your browser]{.eyebrow}
-
-## Open the notebook
+## Backup: Google Colab
 
 1. Open **{{< var go >}}** and choose the **learner notebook**
 2. Sign in with Google, then click **Copy to Drive**
@@ -168,35 +189,41 @@ Edits in the original tab aren't saved. Every tab title should start with **"Cop
 
 [Notebook: *Introduction to Programming with Python*, top cell]{.pill}
 
-## Python vs. Jupyter vs. Colab
+## Python, Jupyter, JupyterLab and Colab
 
-::: {.cards .three}
+::: {.cards .two}
 ::: {.card}
 [Python]{.card-title}
-The language. It ran on your laptop and runs here too.
+The language.
 :::
 
 ::: {.card}
 [Jupyter]{.card-title}
-A notebook: code and text in cells, results right underneath.
+The notebook format, `.ipynb`.
+:::
+
+::: {.card}
+[JupyterLab]{.card-title}
+Runs notebooks on your laptop.
 :::
 
 ::: {.card .red}
 [Colab]{.card-title}
-Jupyter notebooks on Google's computers. Nothing to install.
+Runs them on Google's computers.
 :::
 :::
 
-[Section 1: Python and Colab]{.pill}
+[Section 1: Python and JupyterLab]{.pill}
 
 ## Find your way around
 
 ::: {.two-col .even}
 ::: {.small}
-- **Table of contents** on the left: how we navigate
-- **Variables** panel: `{x}`
-- <kbd>Shift</kbd>+<kbd>Enter</kbd> runs a cell and moves on
-- <kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>Enter</kbd> runs it in place
+- **File browser** on the left: your `dss-python` folder
+- **Table of contents** in the left sidebar: how we navigate
+- **Kernel status** at the top right
+- **Run** menu
+- <kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>S</kbd> saves
 - Only the **last line** of a cell shows automatically
 :::
 
@@ -204,6 +231,47 @@ Jupyter notebooks on Google's computers. Nothing to install.
 <div class="type">len?</div>
 
 Put `?` after a name for help.
+
+<div class="type">%whos</div>
+
+Lists the variables in memory.
+:::
+:::
+
+[Section 2: Notebook basics]{.pill}
+
+## Two modes
+
+::: {.cards .two}
+::: {.card}
+[Edit mode]{.card-title}
+Press <kbd>Enter</kbd>. For typing in a cell.
+:::
+
+::: {.card}
+[Command mode]{.card-title}
+Press <kbd>Esc</kbd>. For whole cells. A blue bar marks the cell.
+:::
+:::
+
+::: {.two-col .even style="margin-top:22px"}
+::: {}
+[In command mode]{.label}
+
+::: {.small}
+- <kbd>A</kbd> / <kbd>B</kbd> add a cell above / below
+- <kbd>M</kbd> / <kbd>Y</kbd> make it markdown / code
+- <kbd>D</kbd> <kbd>D</kbd> deletes it
+:::
+:::
+
+::: {}
+[In either mode]{.label}
+
+::: {.small}
+- <kbd>Shift</kbd>+<kbd>Enter</kbd> runs a cell and moves on
+- <kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>Enter</kbd> runs it in place
+:::
 :::
 :::
 
@@ -273,7 +341,7 @@ A variable is a name for a value. `=` **assigns**; `==` **compares**.
 Five minutes. Part 2 is in *this same notebook*.
 :::
 
-Everything you made is still here. Helpers: finishing flagged installs.
+Everything you made is still here. Save: <kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>S</kbd>. Helpers: finishing flagged installs.
 
 # Part 2: Control flow and functions {.divider background-color="#CC0000"}
 
@@ -377,7 +445,7 @@ The full **Basics** and **Loops and Functions** workshops cover all of it. Links
 - **Practice at home** in the notebook: each cell stands on its own
 - **The filled notebook** has every answer
 - **The cheat sheet** on the materials page
-- **Take your work home:** File, Download .ipynb, then `uv run --with jupyter jupyter lab`
+- **It's already on your laptop:** next time, `cd dss-python` then `uv run jupyter lab`. On Colab today? Download the .ipynb and drag it in.
 - **Help:** [go.ncsu.edu/getdatahelp](https://go.ncsu.edu/getdatahelp)
 - **Questions:** [{{< var email >}}](mailto:{{< var email >}})
 :::

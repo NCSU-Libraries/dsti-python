@@ -4,15 +4,20 @@ subtitle: "Everything we used today, on one page. Print it or keep it open in a 
 toc: false
 ---
 
-## Colab keys
+## JupyterLab keys
 
-| Key | What it does |
-| --- | --- |
-| {{< kbd Shift-Enter >}} | Run the cell and move to the next one |
-| {{< kbd Cmd-Enter >}} (Mac), {{< kbd Ctrl-Enter >}} (Windows) | Run the cell and stay on it |
-| **+ Code** | Add a new code cell |
-| `len?` | Show help for `len`. Works for any name. |
-| **Runtime → Run before** | Run every cell above the current one, after a fresh start |
+| Key | What it does | In Colab |
+| --- | --- | --- |
+| {{< kbd Shift-Enter >}} | Run the cell and move to the next one | Same |
+| {{< kbd Cmd-Enter >}} (Mac), {{< kbd Ctrl-Enter >}} (Windows) | Run the cell and stay on it | Same |
+| {{< kbd Esc >}} and {{< kbd Enter >}} | Esc is command mode, for whole cells. Enter is edit mode, for typing. | Same |
+| {{< kbd A >}} and {{< kbd B >}} (command mode) | Add a cell above or below | **+ Code** and **+ Text** |
+| {{< kbd M >}} and {{< kbd Y >}} (command mode) | Make the cell markdown or code | {{< kbd Cmd-M >}} or {{< kbd Ctrl-M >}}, then M or Y |
+| {{< kbd D >}} {{< kbd D >}} (command mode) | Delete the cell. Z undoes it. | {{< kbd Cmd-M >}} or {{< kbd Ctrl-M >}}, then D |
+| {{< kbd Cmd-S >}} (Mac), {{< kbd Ctrl-S >}} (Windows) | Save | Saves to Drive by itself |
+| `len?` | Show help for `len`. Works for any name. | Same |
+| **Run → Run All Above Selected Cell** | Run every cell above the current one | **Runtime → Run before** |
+| **Kernel → Restart Kernel** | Start fresh. Run your cells again. | **Runtime → Restart session** |
 
 Only the last line of a cell shows its value. Use `print()` to show more.
 
@@ -124,14 +129,18 @@ Dot notation: `object.method(argument)`.
 
 Read the last line of the message first: it names the error. The lines above it point to where it happened.
 
-## uv commands
+## uv and conda commands
 
-| Command | What it does |
-| --- | --- |
-| `uv --version` | Check uv is installed |
-| `uv init --python {{< var python >}} --vcs none dss-python` | Make a project folder |
-| `uv run --with jupyter jupyter lab` | Start JupyterLab, installing it on the first run |
-| `uv add matplotlib` | Add a package to the project |
+| Task | uv | conda |
+| --- | --- | --- |
+| Check it's installed | `uv --version` | `conda --version` |
+| Make the project | `uv init --python {{< var python >}} --vcs none dss-python` | `{{< var conda.create >}}` (also adds JupyterLab and matplotlib) |
+| Add JupyterLab and matplotlib | `cd dss-python`, then `uv add jupyterlab matplotlib` | Done by the line above |
+| Start JupyterLab (run it inside `dss-python`) | `uv run jupyter lab` | `conda activate dss-python`, `cd dss-python`, then `jupyter lab` |
+| Add any package, such as Polars for the EDA workshop | `uv add polars` | `conda install -c conda-forge polars` |
+
+With conda, make the folder once with `mkdir dss-python` before the first `cd dss-python`.
 
 <p class="small-muted">Checked with uv {{< var checked.uv >}} on {{< var checked.date >}}. The
-<a href="https://docs.astral.sh/uv/">uv docs</a> are the latest word.</p>
+<a href="https://docs.astral.sh/uv/">uv docs</a> and the <a href="https://docs.conda.io/">conda docs</a> are the
+latest word.</p>

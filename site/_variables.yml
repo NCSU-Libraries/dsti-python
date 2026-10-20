@@ -23,6 +23,18 @@ colab:
   learner: "https://colab.research.google.com/github/NCSU-Libraries/dsti-python/blob/main/notebooks/introduction-to-programming-with-python.ipynb"
   filled: "https://colab.research.google.com/github/NCSU-Libraries/dsti-python/blob/main/notebooks/introduction-to-programming-with-python-solutions.ipynb"
 
+# Downloads of the same notebooks, relative to the site root. tools/copy_notebooks.py (Quarto post-render)
+# copies notebooks/*.ipynb into _site/notebooks/.
+download:
+  learner: "notebooks/introduction-to-programming-with-python.ipynb"
+  filled: "notebooks/introduction-to-programming-with-python-solutions.ipynb"
+
+# The conda alternative to uv: conda-forge only, so the Anaconda defaults channel (and its Terms of Service prompt)
+# is never touched. Keep python= in step with `python` below. Quarto reads var values as smart-typography markdown,
+# so a bare -- becomes an en dash even in code blocks: escape each hyphen (\\-\\-).
+conda:
+  create: "conda create -y -n dss-python -c conda-forge \\-\\-override-channels python=3.13 jupyterlab matplotlib"
+
 # The full workshops this session was built from
 full:
   basics: "https://colab.research.google.com/github/NCSU-Libraries/getting-started-with-python/blob/main/workshops/basics/basics.ipynb"
@@ -32,10 +44,10 @@ full:
   eda: "https://colab.research.google.com/github/NCSU-Libraries/getting-started-with-python/blob/main/workshops/exploratory-data-analysis/exploratory-data-analysis.ipynb"
   repo: "https://github.com/NCSU-Libraries/getting-started-with-python"
 
-# Colab's Python version; keep `uv init --python` in step with it
+# Colab's Python (the backup); keep `uv init --python` and conda.create's python= in step with it
 python: "3.13"
 
 # The uv version every command on the Setup page was checked against
 checked:
-  uv: "0.13.1"
-  date: "October 19, 2026"
+  uv: "0.13.3"
+  date: "October 20, 2026"

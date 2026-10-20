@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - "site/**"
+      - "notebooks/**"
+      - "tools/copy_notebooks.py"
       - ".github/workflows/deploy-pages.yml"
   workflow_dispatch:
 

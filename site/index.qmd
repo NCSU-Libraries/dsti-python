@@ -11,7 +11,7 @@ title-block-style: none
 
 <p class="when">{{< var event.date >}}, {{< var event.time >}} · {{< var event.room >}}</p>
 
-Two hours, from installing Python to writing your own function. Everything after the install runs in Google Colab.
+From installing Python to writing your own function, on your own laptop in JupyterLab. Google Colab is the backup if an install gets stuck.
 :::
 
 ## What you'll leave with
@@ -19,7 +19,7 @@ Two hours, from installing Python to writing your own function. Everything after
 ::: {.finish-line}
 <ul id="finish-line">
 <li><label><input type="checkbox" data-k="uv"> uv and JupyterLab running on your laptop</label></li>
-<li><label><input type="checkbox" data-k="copy"> Your own copy of the notebook in Drive</label></li>
+<li><label><input type="checkbox" data-k="nb"> The session notebook open in JupyterLab</label></li>
 <li><label><input type="checkbox" data-k="vars"> Variables and data types</label></li>
 <li><label><input type="checkbox" data-k="lists"> Lists and dictionaries</label></li>
 <li><label><input type="checkbox" data-k="if"> Comparisons and an <code>if</code></label></li>
@@ -46,18 +46,20 @@ Two hours, from installing Python to writing your own function. Everything after
 
 ## Before you come
 
-1. **Get a Google account.** An NC State or personal account both work. Colab needs one.
-2. **Bring a laptop** (Mac or Windows) and its charger.
-3. **Try the [setup guide](setup.qmd) ahead of time** if you like. It takes about 10 minutes, and we'll also do it
+1. **Bring a Mac or Windows laptop** you can install software on, and its charger. uv needs no admin rights.
+2. **Do the [Setup page](setup.qmd) ahead of time** if you can. It takes about 15 minutes, and we'll also do it
    together at the start.
+3. **Get a Google account**, NC State or personal, for the Colab backup.
+4. **Already use conda** (Anaconda, Miniconda or Miniforge)? The [Setup page](setup.qmd#conda) has conda steps too.
 
 ## The materials
 
 ::: {.cards}
 <a class="card-link" href="slides/index.html"><span class="card-title">Slides</span><span class="card-text">The live session, step by step</span></a>
-<a class="card-link" href="{{< var colab.learner >}}"><span class="card-title">Learner notebook</span><span class="card-text">Open in Colab and write the code with us</span></a>
-<a class="card-link" href="{{< var colab.filled >}}"><span class="card-title">Filled notebook</span><span class="card-text">Every answer, to check your work</span></a>
 <a class="card-link" href="setup.qmd"><span class="card-title">Setup guide</span><span class="card-text">Install uv and JupyterLab, and fix common problems</span></a>
+<a class="card-link" href="{{< var download.learner >}}" download data-noresolveinput><span class="card-title">Learner notebook</span><span class="card-text">Download it, then drag it into JupyterLab</span></a>
+<a class="card-link" href="{{< var download.filled >}}" download data-noresolveinput><span class="card-title">Filled notebook</span><span class="card-text">Every answer, to check your work</span></a>
+<a class="card-link" href="setup.qmd#colab"><span class="card-title">Colab backup</span><span class="card-text">If your install gets stuck, work in your browser</span></a>
 <a class="card-link" href="cheatsheet.qmd"><span class="card-title">Cheat sheet</span><span class="card-text">Keys, syntax and common errors on one page</span></a>
 :::
 
@@ -65,15 +67,16 @@ Two hours, from installing Python to writing your own function. Everything after
 
 | Time | What we'll do |
 | ---- | ------------------------------------------------------------ |
-| 8:30 | Check-in and refreshments, here in {{< var event.room >}} |
-| 9:00 | Welcome and what you'll learn |
-| 9:05 | Install Python with uv, and check JupyterLab |
-| 9:17 | Open the notebook in Colab and find your way around |
-| 9:31 | **Part 1:** variables, data types, lists, dictionaries and arithmetic |
-| 10:01 | Break |
-| 10:06 | **Part 2:** comparisons, `if`, `for`, methods and your own functions |
-| 10:51 | Wrap-up and next steps |
-| 11:00 | Practice and questions |
+| 8:30 | Check-in and refreshments, here in {{< var event.room >}}. Want a head start? Begin the [Setup page](setup.qmd). |
+| 9:00 | Welcome |
+| 9:05 | Install Python with uv (or conda), make your project, add JupyterLab |
+| 9:20 | Download the notebook and open it in JupyterLab (not running by about 9:30? switch to Colab) |
+| 9:28 | Find your way around JupyterLab |
+| 9:41 | **Part 1:** variables, data types, lists, dictionaries and arithmetic |
+| 10:11 | Break |
+| 10:16 | **Part 2:** comparisons, `if`, `for`, methods and your own functions |
+| 11:01 | Wrap-up and next steps |
+| 11:10 | Practice, questions and install help |
 | 11:30 | Wrap-up and discussion with all three tracks, in {{< var event.room >}} |
 
 ## More AI workshops from us
