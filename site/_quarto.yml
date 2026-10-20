@@ -34,6 +34,10 @@ website:
             text: "Learner notebook in Colab (backup)"
           - href: "https://colab.research.google.com/github/NCSU-Libraries/dsti-python/blob/main/notebooks/introduction-to-programming-with-python-solutions.ipynb"
             text: "Filled notebook in Colab"
+      - text: Activities
+        menu:
+          - href: activities/time-use.qmd
+            text: "How people spend their day (time use)"
       - href: cheatsheet.qmd
         text: Cheat sheet
     right:

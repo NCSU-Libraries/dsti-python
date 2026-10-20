@@ -33,7 +33,11 @@ whole restart story.
 | `notebooks/introduction-to-programming-with-python.ipynb` | Learner notebook: blank code under comment scaffolds |
 | `notebooks/introduction-to-programming-with-python-solutions.ipynb` | Filled notebook: every exercise answered |
 | `tools/build_notebooks.py` | Generates both notebooks from getting-started-with-python at pinned commit `9b288fa` |
-| `tools/copy_notebooks.py` | Quarto post-render step: copies `notebooks/*.ipynb` into `site/_site/notebooks/` for the Download links |
+| `notebooks/activity-*.ipynb` | Follow-along activities for after the session, learner and `-solutions` versions |
+| `tools/build_activities.py` | Generates the activity notebooks from one module per activity in `tools/activities/` (auto-discovered) |
+| `data/` | The activities' CSVs. `atus_*.csv` come from the DSTI teaching dataset via `tools/atus_data.py` |
+| `site/activities/` | One page per activity: finish line, setup, steps, check numbers, data dictionary |
+| `tools/copy_notebooks.py` | Quarto post-render step: copies `notebooks/*.ipynb` and `data/*.csv` into `site/_site/` for the Download links |
 | `site/` | Quarto website plus the reveal.js deck (`site/slides/index.qmd`) |
 | `site/_variables.yml` | Facts used on several pages and in the deck: event, links, downloads, the conda command, Python and uv versions |
 | `tools/check_links.py` | Checks every link and image in `site/_site` (`--web` also requests external URLs) |
@@ -44,6 +48,8 @@ whole restart story.
 ```bash
 Q=/Applications/RStudio.app/Contents/Resources/app/quarto/bin/quarto   # Quarto isn't on PATH on this Mac
 python3 tools/build_notebooks.py --src ~/Desktop/getting-started-with-python   # regenerate both notebooks
+python3 tools/build_activities.py                                      # regenerate the activity notebooks (--check: fail if stale)
+python3 tools/atus_data.py                                             # rebuild data/atus_*.csv from the DSTI shared drive
 $Q render site                                                         # full build into site/_site (+ notebooks/ via post-render)
 $Q render site/slides/index.qmd                                        # the deck only
 python3 tools/check_links.py                                           # after a render
@@ -57,7 +63,15 @@ pushes.
 ## Keeping things consistent
 
 - **The notebooks are generated.** Change them by editing the manifest in `tools/build_notebooks.py` and re-running
-  it. Hand edits to the `.ipynb` files are overwritten on the next build.
+  it. Hand edits to the `.ipynb` files are overwritten on the next build. The activity notebooks are generated too:
+  edit `tools/activities/<name>.py` and run `tools/build_activities.py`.
+- **Each activity's numbers are in three places**: its notebook's *Check your numbers*, its page's *Check your
+  numbers*, and the notebook's own outputs. They were checked with Polars 2.0.0 (`activities.*.polars` in
+  `_variables.yml`). Change the data or the pipeline, re-run the filled notebook, and update both tables.
+- **The time-use activity shares its data with the DSTI spreadsheets track.** `data/atus_working.csv` is the team's
+  `working_ATUS_DSTI_from_tsv.csv` with Metropolitan put back to ATUS codes, to match their Google Sheet. Its
+  mistakes are planted on purpose (see `DSTI_dataset-spec.md` on the shared drive); don't clean them. The source is
+  ICPSR study 36268 (BLS ATUS).
 - **Learner and filled are paired by cell id**: same cells, same order. The build script asserts it, and asserts that
   the learner never has code the filled notebook lacks (exempt: the `my_info = []` scaffold and the four fix-the-error
   cells, whose learner code is deliberately broken).

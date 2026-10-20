@@ -1,0 +1,188 @@
+---
+title: "Activity: How People Spend Their Day"
+subtitle: "Clean a real survey extract, then compare chores and leisure. About 45 minutes."
+---
+
+The Data Science Training Intensive's spreadsheets track cleans an extract of the American Time Use Survey (ATUS) in
+Google Sheets. You have the same file, and now you have Python. Each row is one person's diary of a single day, with the minutes they spent
+on chores, leisure and more. The file has mistakes in it, on purpose.
+
+**The question:** how do people split their day between household chores and leisure, by number of children and by
+work status?
+
+You'll clean the file twice. First with plain Python, the tools from the intro session. Then with Polars, a library built for
+tables, which works on a whole column at once. Then you'll answer the question and draw one chart.
+
+::: {.callout-note collapse="false"}
+## Your finish line
+
+You're done when you have all of these:
+
+- 2,000 rows, and every Case ID is unique
+- **Sex** and **Education level** cleaned
+- **Chores** and **Leisure** columns
+- The table of averages by number of children
+- One chart
+- `atus_clean.csv` saved
+:::
+
+## Before you start
+
+You need the `dss-python` project and JupyterLab from the [Setup page](../setup.qmd). Using Colab instead? Jump to
+[the Colab box](#on-colab) below.
+
+### 1. Add Polars
+
+You only need Polars from Part 2, so any time before then works. Open a terminal in your `dss-python` folder.
+JupyterLab has one: **File → New → Terminal**. Run:
+
+::: {.prompt .prompt-shell}
+```bash
+uv add polars
+```
+:::
+
+If the notebook is already open, choose **Kernel → Restart Kernel** so it can find Polars.
+
+Using conda? Run this in your `dss-python` environment instead:
+
+::: {.prompt .prompt-shell}
+```bash
+conda install -c conda-forge polars
+```
+:::
+
+### 2. Download the learner notebook
+
+Get it the same way you got the session notebook:
+[Download the activity notebook](../{{< var activities.time-use.download.learner >}}){download="" data-noresolveinput=""}.
+Your browser saves it in your Downloads folder. Drag it onto JupyterLab's file list in the left sidebar, or click the
+**Upload** button (↑) above the list. Then double-click it.
+
+### 3. The data comes with the notebook
+
+The notebook's first cell downloads the two data files into the notebook's folder, so there's nothing to do. Want the
+files yourself? Save them in the same folder as the notebook:
+[atus_working.csv](../{{< var activities.time-use.data.working >}}){download=""}, the file you'll clean, and
+[atus_raw.csv](../{{< var activities.time-use.data.raw >}}){download=""}, the original survey codes.
+
+::: {#on-colab .callout-tip}
+## On Colab instead?
+
+Open the [learner notebook in Colab]({{< var activities.time-use.colab.learner >}}), sign in, and click **Copy to
+Drive**. Work in the tab titled **Copy of activity-time-use.ipynb**. Polars is already installed there, and the first
+cell downloads the data.
+:::
+
+## What you'll do
+
+Work down the notebook from the top. Each section starts with a short explanation. Where a cell holds only a `#`
+comment, write the code under it, then run it with {{< kbd Shift-Enter >}}.
+
+### Part 1: Plain Python
+
+1. **Read the file.** The `csv` module turns each row into a dictionary.
+2. **Count the values in a column.** Write `count_values`, and spot the values that shouldn't be there.
+3. **A function that cleans a value.** Write `clean_sex`, and fix every row.
+4. **Find an impossible age.** One person has an age that can't be right.
+
+That was a lot of looping for one column. Part 2 does the same work, and more, a whole column at a time.
+
+### Part 2: Polars
+
+5. **Load the data with Polars.** One line reads the whole file into a table.
+6. **Fix the text columns.** Clean **Sex** and **Education level** for every row at once.
+7. **Codes, names and missing values.** Give columns readable names, turn survey codes into labels, and mark
+   impossible values as missing.
+8. **Duplicates.** Remove repeated rows, then settle a Case ID that has two ages by checking the source file.
+9. **Chores and leisure.** Add up the minutes for each person.
+10. **Answer the question.** Average chores and leisure by number of children, then by labor force status.
+11. **One chart.** Average chores by number of children.
+12. **Save your work.** Write the clean data to `atus_clean.csv`.
+
+## Check your numbers
+
+Same numbers as the spreadsheets track? Compare them at the wrap-up.
+
+### Rows and cleaning
+
+| After | Rows |
+| ------------ | -------- |
+| Reading the file (section 5) | 2,006 |
+| `unique()`, which removes exact copies (section 8) | 2,001 |
+| Dropping the row with the wrong age (section 8) | 2,000, and every Case ID is unique |
+
+- **Sex** has two values: Female and Male.
+- **Education level** has 8 values: No diploma, High School, Some college-no degree, Associate's, Bachelor's, Master's,
+  Professional and Doctoral.
+- **Missing values** at `df.null_count()` in section 7: Age 1, Sleep (mins) 3, Work hours per week 839, Metropolitan 233.
+
+### Chores and leisure
+
+Averages over everyone: **chores 74.1** minutes and **leisure 252.2** minutes a day.
+
+By number of children (3 means 3 or more):
+
+| Children | People | Chores (mins) | Leisure (mins) |
+| ------ | ---- | ----- | ----- |
+| 0 | 1137 | 65.7 | 297.9 |
+| 1 | 323 | 66.2 | 206.9 |
+| 2 | 360 | 85.9 | 187.7 |
+| 3 or more | 180 | 117.4 | 173.5 |
+
+By labor force status, biggest group first:
+
+| Status | People | Chores (mins) | Leisure (mins) |
+| -------- | ---- | ----- | ----- |
+| Employed, at work | 1181 | 62.9 | 200.9 |
+| Not in labor force | 684 | 91.5 | 337.1 |
+| Unemployed, looking | 72 | 87.4 | 273.3 |
+| Employed, absent | 55 | 71.1 | 258.6 |
+| Unemployed, on layoff | 8 | 140.4 | 326.0 |
+
+## About the data
+
+Each row is one respondent's diary for a single day, 24 hours. The activity columns end in (mins), and hold the
+minutes spent on each activity that day.
+
+| Column | Meaning | Values and codes |
+| ------------- | -------- | ------------ |
+| `Case` | Respondent ID (`TUCASEID` in the survey) | A long number, one per person |
+| `Diary Year` | Year of the diary day | 2003–2023 |
+| `Diary Day` | Day of the week | Monday to Sunday |
+| `Metropolitan` | Lives in a metropolitan area | 1 Metropolitan, 2 Non-metropolitan, 3 Not identified, -1 Blank |
+| `Education level` | Highest education | Text, like Bachelor's |
+| `Age` | Age in years | 15–85. 80 and 85 are top codes: older ages are grouped there. |
+| `Sex` | Sex of the respondent | Female or Male |
+| `TRCHILDNUM` | Children under 18 in the household | 0–8 |
+| `Labor force status` | Work status | Employed, at work. Employed, absent. Unemployed, looking. Unemployed, on layoff. Not in labor force. |
+| `Enrolled in school` | In school or not | Yes, No, or Blank (not asked) |
+| `TEHRUSLT` | Usual weekly work hours | Hours. -1 means blank (not asked), -4 means hours vary. |
+| Sleep | Minutes asleep that day | The text NA means missing. |
+| Interior cleaning, Laundry, Food and drink prep, Kitchen clean-up | Minutes on each chore | These four add up to **Chores**. |
+| Reading, Playing games, TV and Movies, Socializing | Minutes on each leisure activity | These four add up to **Leisure**. |
+| Eating and Drinking, Grocery Shopping | Minutes eating, and shopping for food | Counted as neither chores nor leisure. |
+
+`atus_raw.csv` has the same 2,000 people with the survey's own variable names and numeric codes, like `TUCASEID`,
+`TESEX` and `TELFS`. It's the source of truth when two rows disagree.
+
+**Source:** American Time Use Survey (U.S. Bureau of Labor Statistics, [bls.gov/tus](https://www.bls.gov/tus/)), via
+ICPSR study 36268. The DSTI team sampled 2,000 respondents from diary years 2003–2023.
+
+**Results describe this sample, not the US.** The file has no survey weights, so the averages don't estimate what
+Americans do overall.
+
+## Stuck?
+
+- **The filled notebook** has every answer:
+  [download it](../{{< var activities.time-use.download.filled >}}){download="" data-noresolveinput=""}, or
+  [open it in Colab]({{< var activities.time-use.colab.filled >}}).
+- **The [cheat sheet](../cheatsheet.qmd)** has JupyterLab keys, syntax and common errors on one page.
+- **Help with setup or access:** [go.ncsu.edu/getdatahelp]({{< var help >}}).
+
+| What you see | What to do |
+| ---------- | -------- |
+| `ModuleNotFoundError` for `polars` | Run `uv add polars` in `dss-python`, then choose **Kernel → Restart Kernel**. |
+| `FileNotFoundError` for `atus_working.csv` | Run the **Get the data** cell near the top first. Or save the CSV files in the notebook's folder, as in step 3 of Before you start. |
+
+<p class="small-muted">Numbers checked with Polars {{< var activities.time-use.polars >}}.</p>

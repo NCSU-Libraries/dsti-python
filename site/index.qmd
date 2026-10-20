@@ -63,6 +63,12 @@ From installing Python to writing your own function, on your own laptop in Jupyt
 <a class="card-link" href="cheatsheet.qmd"><span class="card-title">Cheat sheet</span><span class="card-text">Keys, syntax and common errors on one page</span></a>
 :::
 
+## After the session: try it on real data
+
+::: {.cards}
+<a class="card-link" href="activities/time-use.qmd"><span class="card-title">How people spend their day</span><span class="card-text">Clean a time-use survey, then compare chores and leisure (about 45 min)</span></a>
+:::
+
 ## Today's plan
 
 | Time | What we'll do |

@@ -29,6 +29,22 @@ download:
   learner: "notebooks/introduction-to-programming-with-python.ipynb"
   filled: "notebooks/introduction-to-programming-with-python-solutions.ipynb"
 
+# The follow-along activities, for after the session. Notebooks are built by tools/build_activities.py; the CSVs live in
+# data/. Download paths are relative to the site root, and tools/copy_notebooks.py (Quarto post-render) copies
+# notebooks/*.ipynb and data/*.csv into the built site. Pages in a subfolder put ../ in front of them.
+activities:
+  time-use:
+    colab:
+      learner: "https://colab.research.google.com/github/NCSU-Libraries/dsti-python/blob/main/notebooks/activity-time-use.ipynb"
+      filled: "https://colab.research.google.com/github/NCSU-Libraries/dsti-python/blob/main/notebooks/activity-time-use-solutions.ipynb"
+    download:
+      learner: "notebooks/activity-time-use.ipynb"
+      filled: "notebooks/activity-time-use-solutions.ipynb"
+    data:
+      working: "data/atus_working.csv"
+      raw: "data/atus_raw.csv"
+    polars: "2.0.0"   # the Polars version the check numbers were verified with
+
 # The conda alternative to uv: conda-forge only, so the Anaconda defaults channel (and its Terms of Service prompt)
 # is never touched. Keep python= in step with `python` below. Quarto reads var values as smart-typography markdown,
 # so a bare -- becomes an en dash even in code blocks: escape each hyphen (\\-\\-).

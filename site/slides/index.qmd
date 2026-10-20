@@ -457,6 +457,20 @@ The full **Basics** and **Loops and Functions** workshops cover all of it. Links
 :::
 :::
 
+## Try it on real data
+
+::: {.cards .two}
+::: {.card}
+[How people spend their day]{.card-title}
+
+- The same file the spreadsheets track cleans
+- Plain Python first, then Polars
+- About 45 minutes
+:::
+:::
+
+[Activities on {{< var go >}}]{.pill}
+
 ## Learn on your own
 
 LinkedIn Learning is **free with your NC State account**: sign in with *UnityID*@ncsu.edu and choose single sign-on.
