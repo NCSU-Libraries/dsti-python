@@ -47,7 +47,7 @@ From installing Python to writing your own function, on your own laptop in Jupyt
 ## Before you come
 
 1. **Bring a Mac or Windows laptop** you can install software on, and its charger. uv needs no admin rights.
-2. **Do the [Setup page](setup.qmd) ahead of time** if you can. It takes about 15 minutes, and we'll also do it
+2. **Do the [Setup page](setup.qmd) ahead of time** if you can. It has a two-minute video, takes about 15 minutes, and we'll also do it
    together at the start.
 3. **Get a Google account**, NC State or personal, for the Colab backup.
 4. **Already use conda** (Anaconda, Miniconda or Miniforge)? The [Setup page](setup.qmd#conda) has conda steps too.

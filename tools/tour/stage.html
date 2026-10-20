@@ -1,0 +1,276 @@
+<!doctype html>
+<!--
+  The stage for the setup walkthrough video. tools/record-tour.mjs serves this folder over HTTP, loads this page in
+  headless Chrome, and drives it through window.stage. The terminal is a simplified re-creation of a Mac shell
+  session; the browser frame shows the real Setup page and real JupyterLab screenshots (tools/tour/pages/).
+  Same look as the Agentic Coding with Claude tour: NC State red, Helvetica Neue, the same cards and captions.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Setup tour stage</title>
+<style>
+  :root { --red: #CC0000; --ink: #1A1A1A; --muted: #6D6E71; --term: #1E1E1E; --termfg: #E8E8E8; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 1280px; height: 720px; overflow: hidden; background: #ECEAE6; font-family: "Helvetica Neue", Arial, sans-serif; }
+  #stage { position: relative; width: 1280px; height: 720px; }
+
+  /* Windows */
+  .win { position: absolute; border-radius: 12px; overflow: hidden; box-shadow: 0 18px 50px rgba(0,0,0,.28); transition: all 700ms cubic-bezier(.4,0,.2,1); }
+  .bar { height: 30px; display: flex; align-items: center; gap: 7px; padding: 0 12px; font-size: 12px; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+  .dot.r { background: #FF5F57; } .dot.y { background: #FEBC2E; } .dot.g { background: #28C840; }
+  .bar .title { flex: 1; text-align: center; margin-right: 50px; }
+
+  #term { background: var(--term); color: var(--termfg); }
+  #term .bar { background: #2D2D2D; color: #AAA; }
+  #term .body { position: absolute; top: 30px; left: 0; right: 0; bottom: 0; padding: 16px 22px; font: 18px/1.5 "JetBrains Mono", Menlo, monospace; overflow: hidden; }
+  #term .lines { transition: opacity 260ms; }
+  #term .ln { white-space: pre-wrap; word-break: break-word; margin: 0; min-height: 27px; }
+  #term .ln .u { color: #8BD48B; }
+  #term .ln .d { color: #7FB5FF; }
+  #term .ln .cmd { color: #FFF; }
+  #term .ln.out { color: #D6D6D6; }
+  #term .ln.dim { color: #9A9A9A; }
+  #term .ln.ok { color: #8BD48B; }
+  #term .ln.add { color: #D6D6D6; }
+  #term .ln.add b { color: #8BD48B; font-weight: 400; }
+  #term .caret { display: inline-block; width: 10px; height: 21px; background: #DDD; vertical-align: -4px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  #term .recreated { position: absolute; right: 16px; bottom: 8px; font-size: 11px; color: #777; font-family: "Helvetica Neue", Arial, sans-serif; }
+
+  #browser { background: #FFF; }
+  #browser .bar { background: #F1F1F1; color: #444; border-bottom: 1px solid #DDD; }
+  #browser .url { flex: 1; margin: 0 40px 0 14px; background: #FFF; border: 1px solid #DDD; border-radius: 6px; padding: 3px 10px; font-size: 12px; color: #555; white-space: nowrap; overflow: hidden; }
+  #browser iframe { position: absolute; top: 30px; left: 0; border: 0; background: #FFF; transform-origin: 0 0; }
+  #browser .fade { position: absolute; top: 30px; left: 0; right: 0; bottom: 0; background: #FFF; opacity: 0; transition: opacity 400ms; pointer-events: none; }
+
+  /* Layouts. jlab fits a 1280x800 JupyterLab screenshot (zoom 0.7375) into the frame. */
+  .term #term { left: 140px; top: 40px; width: 1000px; height: 600px; }
+  .term #browser { left: 1300px; top: 40px; width: 1100px; height: 620px; opacity: 0; }
+  .browser #term { left: -1100px; top: 40px; width: 1000px; height: 600px; opacity: 0; }
+  .browser #browser { left: 90px; top: 30px; width: 1100px; height: 620px; }
+  .jlab #term { left: -1100px; top: 40px; width: 1000px; height: 600px; opacity: 0; }
+  .jlab #browser { left: 168px; top: 30px; width: 944px; height: 620px; }
+
+  /* Overlays */
+  #dl { position: absolute; right: 118px; top: 76px; width: 470px; display: flex; gap: 14px; align-items: center; background: #FFF; border: 1px solid #D5D5D5;
+        border-radius: 12px; padding: 14px 18px; box-shadow: 0 20px 44px rgba(0,0,0,.30); opacity: 0; transform: translateY(-14px); z-index: 20;
+        transition: all 420ms cubic-bezier(.2,.8,.2,1); }
+  #dl.on { opacity: 1; transform: translateY(0); }
+  #dl svg { flex: none; }
+  #dl .n { font: 600 15px/1.25 "Helvetica Neue", Arial, sans-serif; color: var(--ink); word-break: break-all; }
+  #dl .s { font: 400 14px/1.4 "Helvetica Neue", Arial, sans-serif; color: #2E7D32; margin-top: 3px; }
+  #dl .s::before { content: "\2713  "; font-weight: 700; }
+
+  #dock { position: absolute; left: 50%; bottom: 112px; transform: translate(-50%, 90px); z-index: 20; opacity: 0; transition: all 500ms cubic-bezier(.2,.8,.2,1);
+          display: flex; align-items: center; gap: 12px; padding: 12px 22px 12px 16px; border-radius: 18px; background: rgba(250,250,250,.94);
+          border: 1px solid #D0D0D0; box-shadow: 0 16px 40px rgba(0,0,0,.28); font: 700 17px "Helvetica Neue", Arial, sans-serif; color: var(--ink); }
+  #dock.on { opacity: 1; transform: translate(-50%, 0); }
+  #file { position: absolute; left: 0; top: 0; z-index: 30; width: 340px; display: none; flex-direction: column; align-items: center; gap: 6px; pointer-events: none; }
+  #file.on { display: flex; }
+  #file svg { filter: drop-shadow(0 6px 10px rgba(0,0,0,.3)); }
+  #file span { background: #1C5FD0; color: #FFF; border-radius: 6px; padding: 3px 9px; font: 500 13.5px/1.3 "Helvetica Neue", Arial, sans-serif; text-align: center; word-break: break-all; max-width: 340px; }
+
+  #keys { position: absolute; right: 112px; top: 150px; z-index: 20; display: flex; align-items: center; gap: 12px; padding: 14px 22px; border-radius: 14px;
+          background: rgba(12,12,12,.94); box-shadow: 0 18px 40px rgba(0,0,0,.34); opacity: 0; transform: scale(.9); transition: all 380ms cubic-bezier(.2,.8,.2,1); }
+  #keys.on { opacity: 1; transform: scale(1); }
+  #keys kbd { display: inline-block; min-width: 64px; text-align: center; padding: 9px 18px 8px; border-radius: 10px; background: #FFF; color: var(--ink);
+              border: 2px solid #C9C9C9; border-bottom-width: 6px; font: 700 28px/1.1 "Helvetica Neue", Arial, sans-serif; transition: all 120ms; }
+  #keys.press kbd { transform: translateY(4px); border-bottom-width: 2px; background: #F3D9D9; }
+  #keys .plus { color: #D6D6D6; font: 700 26px "Helvetica Neue", Arial, sans-serif; }
+
+  #ripple { position: fixed; left: 0; top: 0; z-index: 2147483000; width: 46px; height: 46px; margin: -23px 0 0 -23px; border: 4px solid var(--red); border-radius: 50%;
+            pointer-events: none; opacity: 0; }
+  #ripple.go { animation: ripple 520ms ease-out; }
+  @keyframes ripple { 0% { opacity: .95; transform: scale(.3); } 100% { opacity: 0; transform: scale(1.5); } }
+
+  #caption { position: fixed; left: 50%; bottom: 26px; z-index: 50; max-width: 82vw; padding: 12px 24px; border-radius: 8px;
+             background: rgba(12,12,12,.92); color: #FFF; font: 700 23px/1.3 "Helvetica Neue", Arial, sans-serif; white-space: nowrap;
+             opacity: 0; transform: translate(-50%, 14px); transition: opacity 320ms ease, transform 320ms ease; box-shadow: 0 12px 34px rgba(0,0,0,.32); }
+  #caption::before { content: ""; display: inline-block; width: 5px; height: 20px; margin: 0 12px -3px 0; background: var(--red); }
+  #caption.on { opacity: 1; transform: translate(-50%, 0); }
+  #step { position: fixed; left: 26px; top: 0; z-index: 50; background: var(--red); color: #FFF; font: 800 14px "Helvetica Neue", Arial, sans-serif;
+          letter-spacing: 2px; text-transform: uppercase; padding: 7px 14px; border-radius: 0 0 8px 8px; opacity: 0; transition: opacity 300ms; }
+  #step.on { opacity: 1; }
+
+  #card { position: fixed; inset: 0; z-index: 100; display: grid; place-content: center; justify-items: center; gap: 18px; background: #161616;
+          color: #FFF; text-align: center; opacity: 0; transition: opacity 600ms ease; pointer-events: none; }
+  #card.on { opacity: 1; }
+  #card img { height: 44px; }
+  #card h1 { margin: 6px 0 0; font: 800 58px/1.08 "Helvetica Neue", Arial, sans-serif; letter-spacing: -0.02em; }
+  #card p { margin: 0; color: #D6D6D6; font: 400 24px/1.4 "Helvetica Neue", Arial, sans-serif; max-width: 900px; }
+  #card .rule { width: 72px; height: 5px; background: var(--red); }
+  #card .points { display: flex; gap: 26px; margin-top: 8px; font: 700 21px/1.3 "Helvetica Neue", Arial, sans-serif; }
+  #card .points span::before { content: ""; display: inline-block; width: 9px; height: 9px; margin: 0 10px 2px 0; border-radius: 50%; background: var(--red); }
+  #card .points.mono { font: 700 24px/1.3 "JetBrains Mono", Menlo, monospace; margin-top: 14px; }
+  #card .url { font: 700 24px "Helvetica Neue", Arial, sans-serif; color: #FF9E9E; margin-top: 10px; }
+</style>
+</head>
+<body>
+<div id="stage" class="term">
+  <div class="win" id="term">
+    <div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title" id="term-title">Terminal</span></div>
+    <div class="body"><div class="lines" id="lines"></div></div>
+    <div class="recreated">simplified re-creation</div>
+  </div>
+  <div class="win" id="browser">
+    <div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="url" id="url"></span></div>
+    <iframe id="frame" title="page"></iframe>
+    <div class="fade" id="fade"></div>
+  </div>
+  <div id="dl">
+    <svg width="40" height="48" viewBox="0 0 40 48"><path d="M4 2h22l10 10v32a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z" fill="#FFF" stroke="#8A8A8A" stroke-width="2"/><path d="M26 2v10h10" fill="#E6E6E6" stroke="#8A8A8A" stroke-width="2"/><rect x="2" y="26" width="34" height="14" rx="2" fill="#F37726"/><text x="19" y="37" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" font-weight="700" fill="#FFF">ipynb</text></svg>
+    <div><div class="n" id="dl-name"></div><div class="s">Saved to Downloads</div></div>
+  </div>
+  <div id="dock">
+    <svg width="40" height="32" viewBox="0 0 40 32"><path d="M2 5a3 3 0 0 1 3-3h10l4 4h16a3 3 0 0 1 3 3v18a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3Z" fill="#5AA9F0"/><path d="M2 12h36v16a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3Z" fill="#83C0FA"/></svg>
+    <span>Downloads</span>
+  </div>
+  <div id="file">
+    <svg width="64" height="76" viewBox="0 0 40 48"><path d="M4 2h22l10 10v32a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z" fill="#FFF" stroke="#8A8A8A" stroke-width="1.6"/><path d="M26 2v10h10" fill="#E6E6E6" stroke="#8A8A8A" stroke-width="1.6"/><rect x="2" y="26" width="34" height="14" rx="2" fill="#F37726"/><text x="19" y="37" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" font-weight="700" fill="#FFF">ipynb</text></svg>
+    <span id="file-name"></span>
+  </div>
+  <div id="keys"><kbd>Shift</kbd><span class="plus">+</span><kbd>Enter</kbd></div>
+</div>
+<div id="ripple"></div>
+<div id="step"></div>
+<div id="caption"></div>
+<div id="card"></div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+// Inner size of the browser frame in each layout, so a page can be scaled to fit before the move finishes.
+const FRAMES = { term: [1100, 620], browser: [1100, 620], jlab: [944, 620] };
+let layoutName = 'term';
+let dragging = false;
+
+// The recorder calls this on every cursor step. Mouse events don't cross into the iframe, so the cursor is placed by hand.
+window.__cur = (x, y) => {
+  const c = document.getElementById('tour-cursor');
+  if (c) c.style.transform = 'translate(' + (x - 6) + 'px, ' + (y - 3) + 'px)';
+  if (dragging) { const f = $('file'); f.style.left = (x - 170) + 'px'; f.style.top = (y - 34) + 'px'; }
+};
+window.__click = (x, y) => {
+  const r = $('ripple');
+  r.style.left = x + 'px'; r.style.top = y + 'px';
+  r.classList.remove('go'); r.offsetWidth; r.classList.add('go');
+};
+
+window.stage = {
+  layout(name) { layoutName = name; $('stage').className = name; },
+  caption(text) {
+    const c = $('caption');
+    if (!text) { c.classList.remove('on'); return; }
+    c.textContent = text; c.classList.add('on');
+  },
+  step(text) { const s = $('step'); if (!text) { s.classList.remove('on'); return; } s.textContent = text; s.classList.add('on'); },
+  card(title, sub, opts = {}) {
+    const card = $('card');
+    if (!title) { card.classList.remove('on'); return; }
+    let html = `<img src="logo-white.png" alt=""><h1>${esc(title)}</h1><div class="rule"></div>`;
+    if (sub) html += `<p>${esc(sub)}</p>`;
+    if (opts.points) html += `<div class="points${opts.mono ? ' mono' : ''}">${opts.points.map((p) => `<span>${esc(p)}</span>`).join('')}</div>`;
+    if (opts.url) html += `<div class="url">${esc(opts.url)}</div>`;
+    card.innerHTML = html;
+    if (opts.instant) { card.style.transition = 'none'; card.classList.add('on'); card.offsetWidth; card.style.transition = ''; }
+    else card.classList.add('on');
+  },
+  term: {
+    title(t) { $('term-title').textContent = t; },
+    clear() { $('lines').innerHTML = ''; },
+    // A new terminal window: the old text fades out, and a fresh prompt comes in.
+    async reset() { const l = $('lines'); l.style.opacity = 0; await sleep(300); l.innerHTML = ''; l.style.opacity = 1; await sleep(250); },
+    add(html, cls) {
+      const d = document.createElement('div');
+      d.className = 'ln ' + (cls || '');
+      d.innerHTML = html;
+      $('lines').append(d);
+      const body = $('lines').parentElement;
+      while ($('lines').offsetHeight > body.clientHeight - 32 && $('lines').children.length > 1) $('lines').firstElementChild.remove();
+      return d;
+    },
+    // A prompt line like zsh's: you@MacBook ~ %. Typing goes into its command span.
+    prompt(cwd = '~') {
+      const d = window.stage.term.add(`<span class="u">you@MacBook</span> <span class="d">${esc(cwd)}</span> % <span class="cmd"></span><span class="caret"></span>`, 'prompt');
+      return d;
+    },
+    async type(text, delay = 30) {
+      const cmd = $('lines').querySelector('.prompt:last-child .cmd');
+      cmd.textContent = '';
+      for (const ch of text) { cmd.textContent += ch; await sleep(delay + Math.random() * 18); }
+    },
+    enter() { const p = $('lines').querySelector('.prompt:last-child'); if (p) p.querySelector('.caret')?.remove(); },
+    async lines(items, gap = 420) {
+      for (const [cls, html] of items) { window.stage.term.add(html, cls); await sleep(gap); }
+    },
+  },
+  browser: {
+    async load(src, label, zoom = 0.9) {
+      const f = $('frame');
+      $('fade').style.opacity = 1;
+      await sleep(300);
+      const [w, h] = FRAMES[layoutName]; // final size of the frame, not the size mid-move
+      f.style.width = (w / zoom) + 'px'; f.style.height = ((h - 30) / zoom) + 'px'; f.style.transform = `scale(${zoom})`;
+      await new Promise((r) => { f.onload = r; f.src = src; });
+      // Links on the page must not navigate away during the recording.
+      f.contentDocument.addEventListener('click', (e) => { if (e.target.closest('a')) e.preventDefault(); }, true);
+      $('url').textContent = label || src;
+      await sleep(500);
+      $('fade').style.opacity = 0;
+    },
+    async scroll(y, ms = 1200) {
+      const win = $('frame').contentWindow;
+      const from = win.scrollY, start = performance.now();
+      await new Promise((resolve) => {
+        const tick = (now) => {
+          const p = Math.min(1, (now - start) / ms), e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+          win.scrollTo(0, from + (y - from) * e);
+          if (p < 1) requestAnimationFrame(tick); else resolve();
+        };
+        requestAnimationFrame(tick);
+      });
+    },
+    // Scroll so the element matching `selector` sits `offset` px below the top of the frame.
+    async scrollTo(selector, offset = 80, ms = 1600) {
+      const doc = $('frame').contentDocument, win = $('frame').contentWindow;
+      const el = doc.querySelector(selector);
+      await window.stage.browser.scroll(el.getBoundingClientRect().top + win.scrollY - offset, ms);
+    },
+    // Show one of the stacked screenshots in the JupyterLab page.
+    show(key, ms = 250) { $('frame').contentWindow.show(key, ms); },
+    find(text) {
+      // Stage-space center of the first element whose own text includes `text`.
+      const doc = $('frame').contentDocument, f = $('frame'), zoom = parseFloat(f.style.transform.replace('scale(', '')) || 1;
+      const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) {
+        if (walker.currentNode.textContent.includes(text)) {
+          const r = walker.currentNode.parentElement.getBoundingClientRect(), fr = f.getBoundingClientRect();
+          return { x: fr.left + (r.left + r.width / 2) * zoom, y: fr.top + (r.top + r.height / 2) * zoom };
+        }
+      }
+      return null;
+    },
+  },
+  download(name) {
+    if (!name) { $('dl').classList.remove('on'); return; }
+    $('dl-name').textContent = name; $('dl').classList.add('on');
+  },
+  // The Downloads chip at the bottom of the browser, with the notebook file on top of it.
+  dock(on, name) {
+    if (!on) { $('dock').classList.remove('on'); $('file').classList.remove('on'); dragging = false; return; }
+    $('file-name').textContent = name;
+    const f = $('file');
+    f.style.left = (640 - 170) + 'px'; f.style.top = '440px'; f.classList.add('on');
+    $('dock').classList.add('on');
+  },
+  grab() { dragging = true; },
+  drop() { dragging = false; $('file').classList.remove('on'); },
+  keys(on) { $('keys').classList.toggle('on', !!on); if (!on) $('keys').classList.remove('press'); },
+  press(on) { $('keys').classList.toggle('press', !!on); },
+};
+</script>
+</body>
+</html>

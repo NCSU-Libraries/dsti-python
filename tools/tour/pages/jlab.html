@@ -1,0 +1,30 @@
+<!doctype html>
+<!-- The JupyterLab screenshots (real JupyterLab 4.6, 1280x800), stacked so the stage can switch between them. -->
+<meta charset="utf-8">
+<title>JupyterLab</title>
+<style>
+  html, body { margin: 0; background: #FFF; overflow: hidden; }
+  #wrap { position: relative; width: 100vw; aspect-ratio: 16 / 10; }
+  img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; }
+  img.on { opacity: 1; }
+</style>
+<div id="wrap">
+  <img data-k="a" src="jlab-a.png" alt="JupyterLab: the dss-python folder, no notebook yet" class="on">
+  <img data-k="b" src="jlab-b.png" alt="JupyterLab: the notebook is in the file list">
+  <img data-k="c" src="jlab-c.png" alt="JupyterLab: the notebook open at the top">
+  <img data-k="d0" src="jlab-d0.png" alt="JupyterLab: scrolled to Example: a simple bar plot">
+  <img data-k="d" src="jlab-d.png" alt="JupyterLab: the bar plot cell selected">
+  <img data-k="e" src="jlab-e.png" alt="JupyterLab: the bar chart under the cell">
+</div>
+<script>
+  // show('b', 250): fade to one screenshot. The new image goes on top, then the old ones are hidden.
+  window.show = (key, ms = 250) => {
+    for (const img of document.querySelectorAll('img')) {
+      const on = img.dataset.k === key;
+      img.style.zIndex = on ? 2 : 1;
+      img.style.transition = on ? `opacity ${ms}ms` : 'none';
+      if (on) img.classList.add('on');
+      else setTimeout(() => img.classList.remove('on'), ms + 20);
+    }
+  };
+</script>

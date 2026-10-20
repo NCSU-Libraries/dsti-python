@@ -11,6 +11,16 @@ Google Colab ([step 10](#colab)) and keep going. A helper will finish your insta
 time.
 :::
 
+## Watch it first: the whole setup in under two minutes
+
+<video controls preload="metadata" playsinline style="width:100%;border-radius:10px;box-shadow:0 10px 28px rgba(0,0,0,.12)" poster="video/setup-poster.jpg">
+<source src="video/setup.mp4" type="video/mp4">
+</video>
+
+<p class="small-muted">A captioned walkthrough of the Mac steps below. The terminal screens are simplified
+re-creations; the JupyterLab screens are real. There's no sound, and every step is also written out on this page.
+On Windows, the steps are the same in PowerShell.</p>
+
 ## 1. Open a terminal
 
 A terminal is a window where you type commands instead of clicking.

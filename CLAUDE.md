@@ -43,6 +43,7 @@ whole restart story.
 | `site/_variables.yml` | Facts used on several pages and in the deck: event, links, downloads, the conda command, Python and uv versions |
 | `tools/check_links.py` | Checks every link and image in `site/_site` (`--web` also requests external URLs) |
 | `tools/shoot.mjs` | Headless Chrome screenshots of pages or slides. Gives a `slide` index in reading order |
+| `tools/record-tour.mjs` | Records the Setup page's captioned walkthrough into `site/video/` from `tools/tour/` (stage, scenes, real JupyterLab screenshots) |
 
 ## Commands
 
@@ -88,8 +89,9 @@ pushes.
   on older uv too. It appears on the Setup page, the cheat sheet, the deck and the video's scenes.
 - **Python version:** `uv init --python` on the Setup page and `python=` in `conda.create` must match Colab's Python
   (`python` in `site/_variables.yml`). Check with `!python --version` in Colab before each run of the session.
-- **The learner flow is in five places**: the Setup page, the deck's install and JupyterLab sections, the cheat sheet's
-  commands table, the notebook's *Open this notebook again later*, and the lesson plan's Sections 2–3. Change them
+- **The learner flow is in six places**: the Setup page, the deck's install and JupyterLab sections, the cheat sheet's
+  commands table, the notebook's *Open this notebook again later*, the lesson plan's Sections 2–3, and the setup video
+  (`tools/tour/scenes.mjs`; re-record with `node tools/record-tour.mjs`, about 2 minutes, needs ffmpeg). Change them
   together, including the 9:30 checkpoint.
 
 ## Gotchas

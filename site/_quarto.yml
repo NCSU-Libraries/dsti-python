@@ -3,6 +3,7 @@ project:
   output-dir: _site
   resources:
     - images/
+    - video/
   # Copies notebooks/*.ipynb into _site/notebooks/ for the Download links. Runs from site/.
   post-render: ../tools/copy_notebooks.py
 
