@@ -85,7 +85,7 @@ From installing Python to writing your own function, on your own laptop in Jupyt
 | 10:16 | **Part 2:** comparisons, `if`, `for`, methods and your own functions |
 | 11:01 | Wrap-up and next steps |
 | 11:10 | Practice, questions and install help |
-| 11:30 | Wrap-up and discussion with all three tracks, in {{< var event.room >}} |
+| 11:30 | Wrap-up, discussion and the post-training survey with all three tracks, in {{< var event.room >}} |
 
 ## More AI workshops from us
 

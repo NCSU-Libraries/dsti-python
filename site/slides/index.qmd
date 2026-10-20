@@ -542,3 +542,43 @@ Next in the series: tables of data, loaded and explored in Python.
 
 ![](../images/dss/qr-eval.png){.qr .qr-big fig-alt="QR code for the workshop evaluation, go.ncsu.edu/dss-workshop-eval"}
 :::
+
+## Survey time
+
+At 11:30 we stay here in {{< var event.room >}}, with the other two tracks, to complete the post-training survey.
+
+::: {.cards .three style="margin-top:44px;text-align:center;font-size:1.15em"}
+::: {.card style="padding:34px 18px"}
+[Survey 1]{.card-title}
+
+Beginning of training
+:::
+
+::: {.card .red style="padding:34px 18px"}
+[Survey 2: now]{.card-title}
+
+End of training
+:::
+
+::: {.card style="padding:34px 18px"}
+[Survey 3]{.card-title}
+
+After training (3–5 months)
+:::
+:::
+
+[Plus an invitation to a 30-minute interview]{.pill style="margin-top:40px"}
+
+## Complete the survey
+
+::: {.two-col}
+::: {}
+We'll take the next **10–15 minutes** for everyone to complete the survey.
+
+[[{{< var survey-short >}}]({{< var survey >}})]{.statement style="font-size:0.95em;white-space:nowrap;margin-top:40px"}
+:::
+
+::: {style="text-align:center"}
+![](../images/qr-survey.svg){.qr .qr-big fig-alt="QR code for the DSTI post-training survey, go.ncsu.edu/dsti2026_post-survey"}
+:::
+:::
