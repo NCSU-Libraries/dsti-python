@@ -134,7 +134,7 @@ Read the last line of the message first: it names the error. The lines above it 
 | Task | uv | conda |
 | --- | --- | --- |
 | Check it's installed | `uv --version` | `conda --version` |
-| Make the project | `uv init --python {{< var python >}} --vcs none dss-python` | `{{< var conda.create >}}` (also adds JupyterLab and matplotlib) |
+| Make the project | `uv init --python {{< var python >}} --vcs none --no-package dss-python` | `{{< var conda.create >}}` (also adds JupyterLab and matplotlib) |
 | Add JupyterLab and matplotlib | `cd dss-python`, then `uv add jupyterlab matplotlib` | Done by the line above |
 | Start JupyterLab (run it inside `dss-python`) | `uv run jupyter lab` | `conda activate dss-python`, `cd dss-python`, then `jupyter lab` |
 | Add any package, such as Polars for the EDA workshop | `uv add polars` | `conda install -c conda-forge polars` |

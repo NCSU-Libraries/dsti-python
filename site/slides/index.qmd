@@ -125,7 +125,7 @@ Open **PowerShell**: Start, type "PowerShell"
 
 ## Your project folder
 
-<div class="type shell">uv init &#45;&#45;python 3.13 &#45;&#45;vcs none dss-python<br>cd dss-python<br>uv add jupyterlab matplotlib</div>
+<div class="type shell">uv init &#45;&#45;python 3.13 &#45;&#45;vcs none &#45;&#45;no-package dss-python<br>cd dss-python<br>uv add jupyterlab matplotlib</div>
 
 ::: {style="font-size:0.8em;margin-top:26px"}
 - A folder with its own Python

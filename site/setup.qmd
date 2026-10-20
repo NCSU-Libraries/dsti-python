@@ -64,7 +64,7 @@ You should see a version number, like `uv {{< var checked.uv >}}`.
 
 ::: {.prompt .prompt-shell}
 ```bash
-uv init --python {{< var python >}} --vcs none dss-python
+uv init --python {{< var python >}} --vcs none --no-package dss-python
 cd dss-python
 ```
 :::
@@ -74,6 +74,7 @@ uv puts three starter files in it, `pyproject.toml`, `main.py` and `README.md`. 
 
 - `--python {{< var python >}}` matches the Python that Colab uses, so code behaves the same in both places.
 - `--vcs none` skips git, so a Mac without Apple's developer tools doesn't ask to install them.
+- `--no-package` keeps it a plain folder for notebooks and scripts, not a Python package to publish.
 
 ## 5. Add JupyterLab and matplotlib
 

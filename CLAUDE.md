@@ -83,6 +83,9 @@ pushes.
 - **The AI workshop list is in two places**: the home page's "More AI workshops from us" and the deck slide of the
   same name. Titles drop the "Data Science Special Topics:" prefix. Change both together.
 - **The deck sets `from: markdown-smart`** so quotes in commands stay straight; keep it, or `"irm …"` turns curly.
+- **`uv init` needs `--no-package`.** Since uv 0.13, a plain `uv init` makes a packaged project (`src/`, a build
+  backend, a build step in `uv add`). The flag keeps the simple `main.py` project the Setup page describes, and it works
+  on older uv too. It appears on the Setup page, the cheat sheet, the deck and the video's scenes.
 - **Python version:** `uv init --python` on the Setup page and `python=` in `conda.create` must match Colab's Python
   (`python` in `site/_variables.yml`). Check with `!python --version` in Colab before each run of the session.
 - **The learner flow is in five places**: the Setup page, the deck's install and JupyterLab sections, the cheat sheet's
