@@ -16,7 +16,7 @@ export default ({ S, js, sleep, moveTo, hoverText, click }) => {
   const step = (t) => S(`stage.step(${js(t)})`);
   const layout = (l) => S(`stage.layout(${js(l)})`);
   const cursor = (on) => S(`document.body.classList.toggle('carded', ${!on})`);
-  const page = (file, label, zoom) => S(`await stage.browser.load(${js('pages/' + file)}, ${js(label)}, ${zoom})`);
+  const page = (file, label, zoom, jump = null) => S(`await stage.browser.load(${js('pages/' + file)}, ${js(label)}, ${zoom}, ${js(jump)})`);
   const show = (key, ms = 250) => S(`stage.browser.show(${js(key)}, ${ms})`);
   const lines = (items, gap = 420) => S(`await stage.term.lines(${js(items)}, ${gap})`);
   // A shell session: ready() adds a prompt, run() types a command into it and presses Enter.
@@ -41,7 +41,7 @@ export default ({ S, js, sleep, moveTo, hoverText, click }) => {
     }],
 
     ['install', async () => {
-      await step('1 · Install uv');
+      await step('2 · Install uv');
       await S(`stage.term.title('Terminal')`);
       await ready('~');
       await cap('Install uv with one line');
@@ -57,6 +57,7 @@ export default ({ S, js, sleep, moveTo, hoverText, click }) => {
       await sleep(900);
       await cap('On Windows, use PowerShell and the Windows line on the Setup page');
       await sleep(3600);
+      await step('3 · Check it worked');
       await cap('Close the terminal, open a new one, then check');
       await sleep(2200);
       await S('await stage.term.reset()');
@@ -68,7 +69,7 @@ export default ({ S, js, sleep, moveTo, hoverText, click }) => {
     }],
 
     ['project', async () => {
-      await step('2 · Make a project');
+      await step('4 · Make your project folder');
       await cap(null);
       await run('uv init --python 3.13 --vcs none --no-package dss-python');
       await lines([['out', 'Initialized project `dss-python` at `/Users/you/dss-python`']], 500);
@@ -80,7 +81,7 @@ export default ({ S, js, sleep, moveTo, hoverText, click }) => {
     }],
 
     ['add', async () => {
-      await step('3 · Add JupyterLab');
+      await step('5 · Add JupyterLab and matplotlib');
       await cap(null);
       await run('uv add jupyterlab matplotlib');
       await lines([
@@ -92,14 +93,16 @@ export default ({ S, js, sleep, moveTo, hoverText, click }) => {
       await cap('The slow step: download the notebook while it runs');
       await sleep(3000);
       // To the real Setup page: scroll to "6. Download the notebook" and click the learner notebook.
+      await step('6 · Download the notebook');
       await layout('browser');
       await sleep(800);
-      await page('setup/index.html', 'ncsu-libraries.github.io/dsti-python/setup.html', 0.9);
+      // Open on step 5's heading, then glide down to step 6.
+      await page('setup/index.html', 'ncsu-libraries.github.io/dsti-python/setup.html', 0.9, '[data-anchor-id="add-jupyterlab-and-matplotlib"]');
       await cursor(true);
       await sleep(700);
-      await S(`await stage.browser.scrollTo('#notebook', 120, 2000)`);
-      await sleep(500);
-      if (!(await hoverText('Download the learner notebook', 1100, -3))) throw new Error('learner notebook link not found');
+      await S(`await stage.browser.scrollTo('#notebook', 120, 1800)`);
+      await sleep(600);
+      if (!(await hoverText('Download the learner notebook', 1100))) throw new Error('learner notebook link not found');
       await sleep(600);
       await click();
       await sleep(250);
@@ -109,6 +112,7 @@ export default ({ S, js, sleep, moveTo, hoverText, click }) => {
       await sleep(400);
       // Back in the terminal, uv has finished.
       await cursor(false);
+      await step('5 · Add JupyterLab and matplotlib');
       await layout('term');
       await sleep(1100);
       await S(`const p = document.querySelector('#lines .prog'); p.className = 'ln out'; p.textContent = 'Prepared 99 packages in 9.1s'`);
@@ -123,7 +127,7 @@ export default ({ S, js, sleep, moveTo, hoverText, click }) => {
     }],
 
     ['open', async () => {
-      await step('4 · Open JupyterLab');
+      await step('7 · Start JupyterLab');
       await cap(null);
       await run('uv run jupyter lab');
       await lines([

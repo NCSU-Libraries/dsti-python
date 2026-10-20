@@ -208,15 +208,23 @@ window.stage = {
     },
   },
   browser: {
-    async load(src, label, zoom = 0.9) {
+    // jump: a selector to scroll to, instantly, while the frame is still covered (so the page never shows its top).
+    async load(src, label, zoom = 0.9, jump = null) {
       const f = $('frame');
       $('fade').style.opacity = 1;
       await sleep(300);
       const [w, h] = FRAMES[layoutName]; // final size of the frame, not the size mid-move
       f.style.width = (w / zoom) + 'px'; f.style.height = ((h - 30) / zoom) + 'px'; f.style.transform = `scale(${zoom})`;
       await new Promise((r) => { f.onload = r; f.src = src; });
+      // The Setup page sets `html { scroll-behavior: smooth }`, so every scrollTo would keep gliding after we stop
+      // driving it, and the cursor would aim at where a link was. Scroll exactly where we say.
+      f.contentDocument.documentElement.style.setProperty('scroll-behavior', 'auto', 'important');
       // Links on the page must not navigate away during the recording.
       f.contentDocument.addEventListener('click', (e) => { if (e.target.closest('a')) e.preventDefault(); }, true);
+      if (jump) {
+        const win = f.contentWindow, el = f.contentDocument.querySelector(jump);
+        win.scrollTo(0, el.getBoundingClientRect().top + win.scrollY - 80);
+      }
       $('url').textContent = label || src;
       await sleep(500);
       $('fade').style.opacity = 0;
