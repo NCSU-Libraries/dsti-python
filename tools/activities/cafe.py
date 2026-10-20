@@ -134,7 +134,7 @@ CELLS = [
     md("sec-3", T('''
         ## 3. Total revenue by item
 
-        A dictionary can keep running totals. The key is the item, and the value is its total so far. It's the same pattern as counting: if the item is already a key, add this row's revenue to its total. If it isn't, start a new total.
+        A dictionary can keep running totals. The key is the item, and the value is its total so far. It's the same pattern as counting: if the item is already a key, add this row's revenue to its total. If it isn't, start a new total. `item in totals` is True when the item is already a key. A `for` loop over a dictionary gives its keys.
 
         `round(total, 2)` keeps two decimal places, which is cents.
     ''')),
@@ -189,8 +189,8 @@ CELLS = [
 
         Polars is a library for tables of data. If you haven't installed it yet:
 
-        - **In `dss-python`:** run `uv add polars` in a terminal. JupyterLab has one: **File → New → Terminal**. Then choose **Kernel → Restart Kernel**. Run the Get the data cell again only if the file is missing. Part 2 doesn't use anything from Part 1, so you can start again from here.
-        - **With conda:** run `conda install -c conda-forge polars`.
+        - **In `dss-python`:** run `uv add polars` in a terminal. JupyterLab has one: **File → New → Terminal**. Then choose **Kernel → Restart Kernel…** so the notebook can find Polars. Run the Get the data cell again only if the file is missing. Part 2 doesn't use anything from Part 1, so you can start again from here.
+        - **With conda:** run `conda install -c conda-forge --override-channels polars`.
         - **In Colab:** Polars is already there.
     ''')),
     code("import-polars", "import polars as pl"),
@@ -209,7 +209,7 @@ CELLS = [
 
         `with_columns` changes columns, and `pl.col("unit_price")` picks one.
 
-        `pl.when(...).then(...).otherwise(...)` is an `if`/`else` for a column. `&` means and, so the first fix only touches a Latte priced at 45.0. Every other price stays as it was.
+        `pl.when(...).then(...).otherwise(...)` is an `if`/`else` for a column. `&` means and, so the first fix only touches a Latte priced at 45.0. Every other price stays as it was. `.alias("unit_price")` names the result, so it replaces the old column.
 
         `replace` takes a dictionary of old values and new values.
     ''')),
@@ -227,7 +227,7 @@ CELLS = [
                 pl.col("item").replace({"Cold Brew Coffee": "Cold Brew"}),
             )
          ''')),
-    code("check-items", "# Check: count the rows for each item", fadd='df["item"].value_counts()'),
+    code("check-items", "# Check: count the rows for each item with value_counts()", fadd='df["item"].value_counts()'),
     md("fix-note", T('''
         Every item should have 264 rows now, one for each day. There are 10 items, where there were 11.
 
@@ -237,7 +237,7 @@ CELLS = [
     md("sec-7", T('''
         ## 7. Revenue by item
 
-        Columns multiply row by row, so `pl.col("units_sold") * pl.col("unit_price")` gives the revenue of every row at once, with no loop.
+        Columns multiply row by row, so `pl.col("units_sold") * pl.col("unit_price")` gives the revenue of every row at once, with no loop. `.alias("revenue")` names the new column, and `.sum()` adds up a column.
 
         `group_by` makes one group for each item, and `agg` summarizes each group. `.round(2)` keeps cents, and `sort` with `descending=True` puts the biggest first.
     ''')),
@@ -261,6 +261,8 @@ CELLS = [
         ## 8. Closed days
 
         On a closed day, every item sold 0. Count those days, then leave them out of the weather question. A closed day isn't a slow day.
+
+        `filter` keeps the rows that match a condition, and `.height` is the number of rows.
     ''')),
     code("closed",
          T('''
@@ -290,16 +292,18 @@ CELLS = [
             open_df = df.filter(pl.col("date").is_in(open_days.implode()))
          ''')),
     md("weather-note", T('''
-        To sort days into weather groups, `pl.when(...).then(...)` can take several `.when(...)` steps. Polars checks them in order, and `.otherwise(...)` catches the rest. `pl.lit("...")` means this exact text, not a column name.
+        To sort days into weather groups, `pl.when(...).then(...)` can take several `.when(...)` steps. Polars checks them in order, and `.otherwise(...)` catches the rest. `pl.lit("...")` means this exact text, not a column name. `.alias("weather")` names the new column.
+
+        `.mean()` averages each group, and `pl.len()` counts its rows (the days).
     ''')),
     code("weather",
          T('''
-            # Average daily units of Iced Tea and Hot Chocolate in cold, mild and hot weather
-            # Hint: below 60°F is cold, 60–79°F is mild, 80°F or warmer is hot. Group by item and weather.
+            # Average daily units of Iced Tea and Hot Chocolate in each weather group
+            # Hint: the groups are below 60°F, 60–79°F and 80°F or warmer. Group by item and weather, then sort by both.
          '''),
          filled=T('''
-            # Average daily units of Iced Tea and Hot Chocolate in cold, mild and hot weather
-            # Hint: below 60°F is cold, 60–79°F is mild, 80°F or warmer is hot. Group by item and weather.
+            # Average daily units of Iced Tea and Hot Chocolate in each weather group
+            # Hint: the groups are below 60°F, 60–79°F and 80°F or warmer. Group by item and weather, then sort by both.
             weather = (
                 open_df.filter(pl.col("item").is_in(["Iced Tea", "Hot Chocolate"]))
                 .with_columns(
@@ -314,24 +318,26 @@ CELLS = [
             weather
          ''')),
     md("results-note", T('''
-        What you should see: Hot Chocolate sells about three times as much below 60°F as at 80°F or warmer. Iced Tea goes the other way.
+        What you should see: Hot Chocolate sells about three and a half times as much below 60°F as at 80°F or warmer. Iced Tea goes the other way.
     ''')),
 
     md("sec-10", T('''
         ## 10. One chart
 
-        To chart by month, group by `pl.col("date").dt.truncate("1mo")`, which rounds each date down to the first day of its month. `strftime("%b %Y")` writes a date as text, like `Aug 2025`, and `.to_list()` turns a Polars column into a list for `plt.bar`.
+        To chart by month, group by `pl.col("date").dt.truncate("1mo").alias("month")`, which rounds each date down to the first day of its month and names it `month`. Then `sort("month")` puts the months in order, so the bars match their labels. `strftime("%b %Y")` writes a date as text, like `Aug 2025`, and `.to_list()` turns a Polars column into a list for `plt.bar`.
     ''')),
     code("chart",
          T('''
-            # Bar chart of revenue by month
-            # Hint: group by the month, sum the revenue, then plt.bar(labels, heights)
-         '''),
-         filled=T('''
-            # Bar chart of revenue by month
-            # Hint: group by the month, sum the revenue, then plt.bar(labels, heights)
             import matplotlib.pyplot as plt
 
+            # Bar chart of revenue by month
+            # Hint: group by the month, sum the revenue, sort by month, then plt.bar(labels, heights)
+         '''),
+         filled=T('''
+            import matplotlib.pyplot as plt
+
+            # Bar chart of revenue by month
+            # Hint: group by the month, sum the revenue, sort by month, then plt.bar(labels, heights)
             monthly = df.group_by(pl.col("date").dt.truncate("1mo").alias("month")).agg(pl.col("revenue").sum()).sort("month")
             labels = monthly["month"].dt.strftime("%b %Y").to_list()
             plt.figure(figsize=(9, 4))

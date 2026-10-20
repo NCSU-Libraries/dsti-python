@@ -111,7 +111,7 @@ CELLS = [
     md("sec-2", T('''
         ## 2. Count the values in a column
 
-        A dictionary can count things. The keys are the values you've seen, and each value is how many times you've seen it.
+        A dictionary can count things. The keys are the values you've seen, and each value is how many times you've seen it. `value in counts` is True when `value` is already a key.
     ''')),
     code("count-values",
          T('''
@@ -155,12 +155,12 @@ CELLS = [
          T('''
             fixes = {"Femal": "Female", "Mole": "Male"}
 
-            # Write clean_sex(value): strip, fix capitals with .title(), then replace known typos using fixes
+            # Write clean_sex(value): strip, fix capitals with .title(), then, if the value is a key in fixes, return fixes[value]
          '''),
          filled=T('''
             fixes = {"Femal": "Female", "Mole": "Male"}
 
-            # Write clean_sex(value): strip, fix capitals with .title(), then replace known typos using fixes
+            # Write clean_sex(value): strip, fix capitals with .title(), then, if the value is a key in fixes, return fixes[value]
             def clean_sex(value):
                 value = value.strip().title()
                 if value in fixes:
@@ -207,13 +207,13 @@ CELLS = [
 
         Polars is a library for tables of data. If you haven't installed it yet:
 
-        - **In `dss-python`:** run `uv add polars` in a terminal. JupyterLab has one: **File → New → Terminal**. Then choose **Kernel → Restart Kernel**. Run the Get the data cell again only if the files are missing. Part 2 doesn't use anything from Part 1, so you can start again from here.
-        - **With conda:** run `conda install -c conda-forge polars`.
+        - **In `dss-python`:** run `uv add polars` in a terminal. JupyterLab has one: **File → New → Terminal**. Then choose **Kernel → Restart Kernel…** so the notebook can find Polars. Run the Get the data cell again only if the files are missing. Part 2 doesn't use anything from Part 1, so you can start again from here.
+        - **With conda:** run `conda install -c conda-forge --override-channels polars`.
         - **In Colab:** Polars is already there.
     ''')),
     code("import-polars", "import polars as pl"),
     md("read-note", T('''
-        `pl.read_csv` reads the whole file into a DataFrame, which is a table. `null_values="NA"` tells Polars that the text `NA` means missing. Without it, the Sleep column would load as text.
+        `pl.read_csv` reads the whole file into a DataFrame, which is a table. `null_values="NA"` tells Polars that the text `NA` means missing. Without it, the `Sleep (mins)` column would load as text.
     ''')),
     code("read-polars", '# Read atus_working.csv into df, with "NA" as missing, and show its shape',
          fadd=T('''
@@ -227,7 +227,7 @@ CELLS = [
 
         `with_columns` changes columns, and `pl.col("Sex")` picks one.
 
-        The `.str` methods are the same ideas as `clean_sex`, applied to every row at once. `replace` takes a dictionary, like `fixes`.
+        The `.str` methods are the same ideas as `clean_sex`, applied to every row at once. `.str.strip_chars()` is Polars' `.strip()`, and `.str.to_titlecase()` is its `.title()`. `replace` takes a dictionary, like `fixes`.
     ''')),
     code("clean-text", "# Clean Sex and Education level",
          fadd=T('''
@@ -244,11 +244,11 @@ CELLS = [
 
         `rename` gives columns readable names. It takes a dictionary of old names and new names.
 
-        Metropolitan still uses ATUS codes, and a dictionary turns them into labels. `None` means missing.
+        Metropolitan still uses ATUS codes, and a dictionary turns them into labels. `None` means missing. `replace_strict` is like `replace`, but the new values can be a different type: here, text for numbers.
 
-        In work hours, -1 (not asked) and -4 (hours vary) aren't hours, so they become missing too. So does the impossible age. `pl.when(...).then(...).otherwise(...)` is Polars' if/else for a column.
+        In work hours, -1 (not asked) and -4 (hours vary) aren't hours, so they become missing too. So does the impossible age. `pl.when(...).then(...).otherwise(...)` is Polars' if/else for a column. `.alias("Age")` names the result, so it replaces the old column.
 
-        Empty is not zero: averages skip missing values.
+        Empty is not zero: averages skip missing values. `df.null_count()` counts the missing values in each column.
     ''')),
     code("rename", "# Give TRCHILDNUM and TEHRUSLT readable names",
          fadd='df = df.rename({"TRCHILDNUM": "Number of children", "TEHRUSLT": "Work hours per week"})'),
@@ -274,6 +274,8 @@ CELLS = [
         ## 8. Duplicates
 
         Survey files can hold the same row twice. Check for it.
+
+        `df.is_duplicated()` marks each row that has an exact copy, and `.sum()` counts them. `filter` keeps the rows that match a condition, and `select` picks columns.
     ''')),
     code("dup-count", "# How many rows are exact copies of another row?", fadd="df.is_duplicated().sum()"),
     md("dup-note", T('''
@@ -294,7 +296,7 @@ CELLS = [
             raw.filter(pl.col("TUCASEID") == 20181109182318).select("TUCASEID", "TEAGE")
          ''')),
     md("drop-note", T('''
-        The source says 37, so 73 is the wrong one. `filter` keeps the rows that match a condition. `~` means not and `&` means and, so the next cell keeps every row except the one with that Case and the age 73.
+        The source says 37, so 73 is the wrong one. `~` means not and `&` means and, so the next cell keeps every row except the one with that Case and the age 73.
     ''')),
     code("drop-wrong", "# Drop the row with the wrong age, then check that every Case ID is unique",
          fadd=T('''
@@ -309,6 +311,8 @@ CELLS = [
         - **Leisure** = Reading + Playing games + TV and Movies + Socializing.
 
         Eating and Grocery Shopping count as neither. These are the same definitions as the spreadsheets track.
+
+        `pl.sum_horizontal` adds up a list of columns, row by row. `.alias("Chores (mins)")` names the new column. Without it, the sum would overwrite the first column in the list.
     ''')),
     code("chores-leisure",
          T('''
@@ -325,7 +329,7 @@ CELLS = [
                 "Socializing (mins)",
             ]
 
-            # Add Chores (mins) and Leisure (mins): the sum of each list, row by row (pl.sum_horizontal)
+            # Add Chores (mins) and Leisure (mins): the sum of each list, row by row (pl.sum_horizontal), named with .alias
          '''),
          filled=T('''
             chores = [
@@ -341,7 +345,7 @@ CELLS = [
                 "Socializing (mins)",
             ]
 
-            # Add Chores (mins) and Leisure (mins): the sum of each list, row by row (pl.sum_horizontal)
+            # Add Chores (mins) and Leisure (mins): the sum of each list, row by row (pl.sum_horizontal), named with .alias
             df = df.with_columns(
                 pl.sum_horizontal(chores).alias("Chores (mins)"),
                 pl.sum_horizontal(leisure).alias("Leisure (mins)"),
@@ -360,8 +364,10 @@ CELLS = [
         ## 10. Answer the question
 
         `group_by` makes one group for each value in a column, and `agg` summarizes each group. `pl.len()` counts the rows in a group, and `alias` names the new column. `clip(upper_bound=3)` puts 3 or more children in one group, so 3 means "3 or more".
+
+        `.sort("Children")` puts the groups in order; without it the order changes from run to run. `sort("People", descending=True)` puts the biggest group first.
     ''')),
-    code("by-kids", "# Average chores and leisure by number of children (3 means 3 or more)",
+    code("by-kids", "# Average chores and leisure by number of children (3 means 3 or more), in order of Children",
          fadd=T('''
             by_kids = (
                 df.with_columns(pl.col("Number of children").clip(upper_bound=3).alias("Children"))
@@ -401,6 +407,8 @@ CELLS = [
     ''')),
     code("chart",
          T('''
+            import matplotlib.pyplot as plt
+
             labels = ["0", "1", "2", "3 or more"]
 
             # Bar chart of average chores by number of children
@@ -436,7 +444,7 @@ CELLS = [
         | Rows at the start, after `unique()`, and after dropping the wrong age | 2006, then 2001, then 2000 |
         | Sex values after cleaning | Female and Male |
         | Education level values after cleaning | 8 |
-        | Missing values at the end of step 7 | Age 1, Sleep (mins) 3, Metropolitan 233, Work hours per week 839 |
+        | Missing values at the end of section 7 | Age 1, Sleep (mins) 3, Metropolitan 233, Work hours per week 839 |
         | Average chores and leisure over everyone | 74.1 and 252.2 minutes |
 
         Chores and leisure by number of children:

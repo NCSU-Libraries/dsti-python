@@ -41,13 +41,13 @@ uv add polars
 ```
 :::
 
-If the notebook is already open, choose **Kernel → Restart Kernel** so it can find Polars.
+If the notebook is already open, choose **Kernel → Restart Kernel…** so it can find Polars.
 
 Using conda? Run this in your `dss-python` environment instead:
 
 ::: {.prompt .prompt-shell}
 ```bash
-conda install -c conda-forge polars
+conda install -c conda-forge --override-channels polars
 ```
 :::
 
@@ -60,7 +60,7 @@ Your browser saves it in your Downloads folder. Drag it onto JupyterLab's file l
 
 ### 3. The data comes with the notebook
 
-The notebook's first cell downloads the data file into the notebook's folder, so there's nothing to do. Want the file
+The notebook's first code cell downloads the data file into the notebook's folder, so there's nothing to do. Want the file
 yourself? Save it in the same folder as the notebook:
 [cafe_sales.csv](../{{< var activities.cafe.data.sales >}}){download=""}.
 
@@ -69,7 +69,7 @@ yourself? Save it in the same folder as the notebook:
 
 Open the [learner notebook in Colab]({{< var activities.cafe.colab.learner >}}), sign in, and click **Copy to
 Drive**. Work in the tab titled **Copy of activity-cafe.ipynb**. Polars is already installed there, and the first
-cell downloads the data.
+code cell downloads the data.
 :::
 
 ## What you'll do
@@ -92,8 +92,8 @@ That was a lot of looping. Part 2 does the work a whole column at a time.
 6. **Fix the two problems.** Correct the \$45 latte, and give "Cold Brew Coffee" its old name back.
 7. **Revenue by item.** Add a revenue column, then total it by item and for the whole year.
 8. **Closed days.** Count the days when nothing sold.
-9. **Does the weather matter?** Leave out the closed days, then compare Iced Tea and Hot Chocolate in cold, mild and
-   hot weather.
+9. **Does the weather matter?** Leave out the closed days, then compare Iced Tea and Hot Chocolate below 60°F, at 60–79°F and at
+   80°F or warmer.
 10. **One chart.** Revenue by month.
 
 ## Check your numbers
@@ -153,7 +153,7 @@ Average units per open day, by weather:
 | Iced Tea | 80°F or warmer | 27.3 | 34 |
 | Iced Tea | below 60°F | 13.6 | 87 |
 
-Hot Chocolate sells about three times as much below 60°F as at 80°F or warmer. Iced Tea goes the other way.
+Hot Chocolate sells about three and a half times as much below 60°F as at 80°F or warmer. Iced Tea goes the other way.
 
 ### The chart
 
@@ -201,14 +201,14 @@ pretend café, not any real one.
 ## Stuck?
 
 - **The filled notebook** has every answer:
-  [download it](../{{< var activities.cafe.download.filled >}}){download="" data-noresolveinput=""}, or
-  [open it in Colab]({{< var activities.cafe.colab.filled >}}).
+  [download the filled notebook](../{{< var activities.cafe.download.filled >}}){download="" data-noresolveinput=""}, or
+  [open the filled notebook in Colab]({{< var activities.cafe.colab.filled >}}).
 - **The [cheat sheet](../cheatsheet.qmd)** has JupyterLab keys, syntax and common errors on one page.
 - **Help with setup or access:** [go.ncsu.edu/getdatahelp]({{< var help >}}).
 
 | What you see | What to do |
 | ---------- | -------- |
-| `ModuleNotFoundError` for `polars` | Run `uv add polars` in `dss-python`, then choose **Kernel → Restart Kernel**. |
+| `ModuleNotFoundError` for `polars` | Run `uv add polars` in `dss-python`, then choose **Kernel → Restart Kernel…** and run the cell again. |
 | `FileNotFoundError` for `cafe_sales.csv` | Run the **Get the data** cell near the top first. Or save the CSV file in the notebook's folder, as in step 3 of Before you start. |
 | `TypeError` that mentions `str` | Values from the `csv` module are text. Wrap them in `int()` or `float()` before you multiply or compare them. |
 

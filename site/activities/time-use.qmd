@@ -42,13 +42,13 @@ uv add polars
 ```
 :::
 
-If the notebook is already open, choose **Kernel → Restart Kernel** so it can find Polars.
+If the notebook is already open, choose **Kernel → Restart Kernel…** so it can find Polars.
 
 Using conda? Run this in your `dss-python` environment instead:
 
 ::: {.prompt .prompt-shell}
 ```bash
-conda install -c conda-forge polars
+conda install -c conda-forge --override-channels polars
 ```
 :::
 
@@ -61,7 +61,7 @@ Your browser saves it in your Downloads folder. Drag it onto JupyterLab's file l
 
 ### 3. The data comes with the notebook
 
-The notebook's first cell downloads the two data files into the notebook's folder, so there's nothing to do. Want the
+The notebook's first code cell downloads the two data files into the notebook's folder, so there's nothing to do. Want the
 files yourself? Save them in the same folder as the notebook:
 [atus_working.csv](../{{< var activities.time-use.data.working >}}){download=""}, the file you'll clean, and
 [atus_raw.csv](../{{< var activities.time-use.data.raw >}}){download=""}, the original survey codes.
@@ -71,7 +71,7 @@ files yourself? Save them in the same folder as the notebook:
 
 Open the [learner notebook in Colab]({{< var activities.time-use.colab.learner >}}), sign in, and click **Copy to
 Drive**. Work in the tab titled **Copy of activity-time-use.ipynb**. Polars is already installed there, and the first
-cell downloads the data.
+code cell downloads the data.
 :::
 
 ## What you'll do
@@ -158,7 +158,7 @@ minutes spent on each activity that day.
 | `Labor force status` | Work status | Employed, at work. Employed, absent. Unemployed, looking. Unemployed, on layoff. Not in labor force. |
 | `Enrolled in school` | In school or not | Yes, No, or Blank (not asked) |
 | `TEHRUSLT` | Usual weekly work hours | Hours. -1 means blank (not asked), -4 means hours vary. |
-| Sleep | Minutes asleep that day | The text NA means missing. |
+| `Sleep (mins)` | Minutes asleep that day | The text NA means missing. |
 | Interior cleaning, Laundry, Food and drink prep, Kitchen clean-up | Minutes on each chore | These four add up to **Chores**. |
 | Reading, Playing games, TV and Movies, Socializing | Minutes on each leisure activity | These four add up to **Leisure**. |
 | Eating and Drinking, Grocery Shopping | Minutes eating, and shopping for food | Counted as neither chores nor leisure. |
@@ -175,14 +175,14 @@ Americans do overall.
 ## Stuck?
 
 - **The filled notebook** has every answer:
-  [download it](../{{< var activities.time-use.download.filled >}}){download="" data-noresolveinput=""}, or
-  [open it in Colab]({{< var activities.time-use.colab.filled >}}).
+  [download the filled notebook](../{{< var activities.time-use.download.filled >}}){download="" data-noresolveinput=""}, or
+  [open the filled notebook in Colab]({{< var activities.time-use.colab.filled >}}).
 - **The [cheat sheet](../cheatsheet.qmd)** has JupyterLab keys, syntax and common errors on one page.
 - **Help with setup or access:** [go.ncsu.edu/getdatahelp]({{< var help >}}).
 
 | What you see | What to do |
 | ---------- | -------- |
-| `ModuleNotFoundError` for `polars` | Run `uv add polars` in `dss-python`, then choose **Kernel → Restart Kernel**. |
+| `ModuleNotFoundError` for `polars` | Run `uv add polars` in `dss-python`, then choose **Kernel → Restart Kernel…** and run the cell again. |
 | `FileNotFoundError` for `atus_working.csv` | Run the **Get the data** cell near the top first. Or save the CSV files in the notebook's folder, as in step 3 of Before you start. |
 
 <p class="small-muted">Numbers checked with Polars {{< var activities.time-use.polars >}}.</p>
