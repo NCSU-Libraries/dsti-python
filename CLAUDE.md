@@ -55,8 +55,13 @@ python3 tools/atus_data.py                                             # rebuild
 $Q render site                                                         # full build into site/_site (+ notebooks/ via post-render)
 $Q render site/slides/index.qmd                                        # the deck only
 python3 tools/check_links.py                                           # after a render
-# Run the filled notebook top to bottom on Colab's Python; only cells tagged raises-exception may raise
-uv run --python 3.13 --with jupyter --with matplotlib jupyter nbconvert --to notebook --execute --stdout notebooks/introduction-to-programming-with-python-solutions.ipynb > /dev/null
+node tools/record-tour.mjs                                             # re-record site/video/setup.mp4 (about 2 minutes)
+
+# Run the notebooks the way learners do: a scratch project made with the Setup page's commands, plus Polars
+uv init --python 3.13 --vcs none --no-package /tmp/dss-python && cd /tmp/dss-python && uv add jupyterlab matplotlib polars
+cp <repo>/notebooks/*.ipynb <repo>/data/*.csv .        # the CSVs too: the activities' download cell needs the live site
+uv run jupyter nbconvert --to notebook --execute --allow-errors --inplace *-solutions.ipynb
+# The session's filled notebook may only error in cells tagged raises-exception; the activities' in none
 ```
 
 The Pages workflow (`.github/workflows/deploy-pages.yml`) runs `quarto render site` with Quarto 1.10.18. Only Alp
@@ -84,7 +89,7 @@ pushes.
 - **The AI workshop list is in two places**: the home page's "More AI workshops from us" and the deck slide of the
   same name. Titles drop the "Data Science Special Topics:" prefix. Change both together.
 - **The deck sets `from: markdown-smart`** so quotes in commands stay straight; keep it, or `"irm …"` turns curly.
-- **`uv init` needs `--no-package`.** Since uv 0.13, a plain `uv init` makes a packaged project (`src/`, a build
+- **`uv init` needs `--no-package`.** Since uv 0.12, a plain `uv init` makes a packaged project (`src/`, a build
   backend, a build step in `uv add`). The flag keeps the simple `main.py` project the Setup page describes, and it works
   on older uv too. It appears on the Setup page, the cheat sheet, the deck and the video's scenes.
 - **Python version:** `uv init --python` on the Setup page and `python=` in `conda.create` must match Colab's Python

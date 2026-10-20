@@ -125,3 +125,7 @@ table { font-size: 0.95rem; }
   .prompt div.sourceCode, .prompt pre { background: #FFF !important; border: 1px solid #999; }
   .prompt pre code { color: #000 !important; }
 }
+
+// Code fonts draw != <= >= == as single glyphs (ligatures). Beginners copy what they see and type ≠, which Python
+// rejects, so show every character as typed.
+code, pre, kbd, samp, .sourceCode { font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }

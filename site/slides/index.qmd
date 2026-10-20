@@ -140,7 +140,7 @@ Open **PowerShell**: Start, type "PowerShell"
 ```
 
 ::: {style="font-size:0.8em;margin-top:26px"}
-- Windows: use **Anaconda Prompt**
+- Windows: use **Anaconda Prompt** or **Miniforge Prompt**
 - Then the same notebook steps
 - Steps on **Setup**
 :::
@@ -169,7 +169,7 @@ Around 9:30, no chart yet? Switch to **Colab** and keep going. A helper finishes
 | `uv: command not found` | Open a **new** terminal, or run `source $HOME/.local/bin/env` |
 | Mac offers "command line developer tools" | **Not Now** is fine |
 | Windows SmartScreen or antivirus warning | Flag a helper |
-| `ModuleNotFoundError: No module named 'matplotlib'` | <kbd>Ctrl</kbd>+<kbd>C</kbd>, then `cd dss-python`, then `uv run jupyter lab` |
+| `ModuleNotFoundError: No module named 'matplotlib'` | <kbd>Ctrl</kbd>+<kbd>C</kbd> twice, then `cd dss-python`, then `uv run jupyter lab` |
 | The notebook isn't in the file list | Drag it in again. Check you started JupyterLab inside `dss-python` |
 | Still stuck | Flag a helper: we finish during the break |
 
@@ -179,7 +179,7 @@ Around 9:30: no chart? Switch to *Colab*.
 
 ## Backup: Google Colab
 
-1. Open **{{< var go >}}** and choose the **learner notebook**
+1. Open **{{< var go >}}**, choose **Colab backup**, then **learner notebook in Colab**
 2. Sign in with Google, then click **Copy to Drive**
 3. Work in the new tab titled **"Copy of introduction-to-programming-with-python.ipynb"**
 
@@ -238,7 +238,7 @@ Lists the variables in memory.
 :::
 :::
 
-[Section 2: Notebook basics]{.pill}
+[Sections 1 and 2]{.pill}
 
 ## Two modes
 
@@ -325,6 +325,7 @@ A variable is a name for a value. `=` **assigns**; `==` **compares**.
 :::
 
 [Try it: `my_info`, and Spot's birthday]{.pill}
+[Section 4: Lists and dictionaries]{.pill .dark}
 
 ## Arithmetic
 
@@ -362,7 +363,7 @@ Everything you made is still here. Save: <kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>S</
 :::
 
 [Try it: less than 10 and greater than zero]{.pill}
-[Section 6]{.pill .dark}
+[Section 6: Comparison and logical operators]{.pill .dark}
 
 ## if, elif and else
 
@@ -481,7 +482,7 @@ The full **Basics** and **Loops and Functions** workshops cover all of it. Links
 
 ## Learn on your own
 
-LinkedIn Learning is **free with your NC State account**: sign in with *UnityID*@ncsu.edu and choose single sign-on.
+LinkedIn Learning is **free with your NC State account**. Start from the Libraries' page so you sign in through NC State.
 
 ::: {.cards .two style="margin-top:22px"}
 ::: {.card}

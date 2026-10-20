@@ -600,7 +600,9 @@ MANIFEST = [
     Copy("B", 101, "## Bonus Section: Errors and troubleshooting",
          edits=[H("## Bonus Section: Errors and troubleshooting", "### Errors and troubleshooting")]),
     Copy("B", 102, "# Referencing an undefined variable results in a \"NameError\"", tags=RAISES),
-    Copy("B", 103, "# Using incorrect Python syntax results in a \"SyntaxError\"", tags=RAISES),
+    Copy("B", 103, "# Using incorrect Python syntax results in a \"SyntaxError\"", tags=RAISES,
+         # Python 3.13 reports an unclosed bracket as _IncompleteInputError, not SyntaxError; a missing comma is a SyntaxError
+         edits=[R("min(56, 234, 8564,", "min(56 234 8564)")]),
     Copy("B", 104, "# Referencing an index that is out of range results in an \"IndexError\"", tags=RAISES),
     Copy("B", 105, "# Referencing a dictionary key that is not valid results in a \"KeyError\"", tags=RAISES),
     Copy("B", 106, "# Applying a function or operation to an incorrect data type results in a", tags=RAISES),
